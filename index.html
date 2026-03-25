@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>骆子杰 | 游戏安全 · NLP · 算法工程师</title>
+<style>
+  :root {
+    --primary: #e879f9;        /* 主色：亮粉紫 */
+    --secondary: #fb7185;      /* 副色：樱花粉 */
+    --accent: #a78bfa;         /* 强调：薰衣草紫 */
+    --accent2: #67e8f9;        /* 点缀：浅青 */
+    --bg-dark: #0d0814;        /* 背景：深紫黑 */
+    --bg-card: rgba(232, 121, 249, 0.04);
+    --bg-card2: rgba(167, 139, 250, 0.06);
+    --text-main: #f0e6ff;
+    --text-muted: #7c6f9a;
+    --glow-cyan: 0 0 20px rgba(232,121,249,0.4), 0 0 60px rgba(232,121,249,0.15);
+    --glow-purple: 0 0 20px rgba(167,139,250,0.5), 0 0 60px rgba(167,139,250,0.2);
+    --glow-pink: 0 0 20px rgba(251,113,133,0.4), 0 0 60px rgba(251,113,133,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* ===== 粒子背景 ===== */
+  #canvas-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ===== 导航 ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(2,4,8,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(232,121,249,0.1);
+  }
+
+  .nav-logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 2px;
+    text-shadow: var(--glow-cyan);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--primary);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--primary); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ===== 通用容器 ===== */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== HERO ===== */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 24px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(10,4,30,0.82) 0%, rgba(20,6,40,0.75) 50%, rgba(10,4,30,0.88) 100%);
+    z-index: 0;
+  }
+
+  .hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(232,121,249,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,121,249,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridMove 20s linear infinite;
+    z-index: 1;
+  }
+
+  @keyframes gridMove {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(60px); }
+  }
+
+  .hero-glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: orbFloat 8s ease-in-out infinite;
+  }
+
+  .orb1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(232,121,249,0.12), transparent 70%);
+    top: -100px; left: -100px;
+    animation-delay: 0s;
+  }
+
+  .orb2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(167,139,250,0.15), transparent 70%);
+    bottom: -80px; right: -80px;
+    animation-delay: 4s;
+  }
+
+  .orb3 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(255,0,110,0.1), transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: 2s;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 18px;
+    border: 1px solid rgba(232,121,249,0.3);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: rgba(232,121,249,0.05);
+    margin-bottom: 28px;
+    animation: fadeInDown 0.8s ease forwards;
+  }
+
+  .hero-name {
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    animation: fadeInUp 0.9s ease 0.2s both;
+    position: relative;
+  }
+
+  .hero-name .name-cn {
+    display: block;
+    background: linear-gradient(135deg, #ffffff 0%, var(--primary) 50%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(232,121,249,0.3));
+  }
+
+  .hero-name .name-en {
+    display: block;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-weight: 300;
+    letter-spacing: 8px;
+    color: var(--text-muted);
+    -webkit-text-fill-color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  .hero-title {
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    animation: fadeInUp 0.9s ease 0.35s both;
+  }
+
+  .hero-title span {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  #typewriter {
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    color: var(--accent2);
+    min-height: 1.8em;
+    margin-bottom: 48px;
+    animation: fadeInUp 0.9s ease 0.5s both;
+  }
+
+  #typewriter::after {
+    content: '|';
+    animation: blink 0.7s step-end infinite;
+    color: var(--primary);
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.9s ease 0.65s both;
+  }
+
+  .btn-primary {
+    padding: 14px 36px;
+    background: linear-gradient(135deg, var(--primary), var(--accent2));
+    color: #000;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glow-cyan);
+  }
+
+  .btn-outline {
+    padding: 13px 36px;
+    background: transparent;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    border: 1px solid rgba(232,121,249,0.4);
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .btn-outline:hover {
+    background: rgba(232,121,249,0.08);
+    border-color: var(--primary);
+    box-shadow: var(--glow-cyan);
+    transform: translateY(-2px);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: fadeIn 1s ease 1.2s both;
+  }
+
+  .scroll-arrow {
+    width: 20px; height: 20px;
+    border-right: 1px solid var(--text-muted);
+    border-bottom: 1px solid var(--text-muted);
+    transform: rotate(45deg);
+    animation: scrollBounce 1.5s ease-in-out infinite;
+  }
+
+  @keyframes scrollBounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); opacity: 1; }
+    50% { transform: rotate(45deg) translateY(6px); opacity: 0.4; }
+  }
+
+  /* ===== 区块通用 ===== */
+  .section-wrap {
+    padding: 100px 0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 12px;
+    opacity: 0.8;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-line {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    margin: 16px auto 0;
+    box-shadow: var(--glow-cyan);
+  }
+
+  /* ===== 关于我 ===== */
+  #about {
+    position: relative;
+    overflow: hidden;
+  }
+
+  #about .section-wrap { position: relative; z-index: 1; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .about-avatar-wrap {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  .avatar-ring {
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: conic-gradient(#ff6eb4, #ffb347, #ff6eb4, #c084fc, #ff6eb4);
+    padding: 4px;
+    animation: rotateBorder 6s linear infinite;
+    box-shadow: 0 0 30px rgba(255,110,180,0.5), 0 0 80px rgba(255,110,180,0.2);
+    position: relative;
+  }
+
+  @keyframes rotateBorder {
+    0% { transform: rotate(0deg); filter: hue-rotate(0deg); }
+    100% { transform: rotate(360deg); filter: hue-rotate(360deg); }
+  }
+
+  .avatar-inner {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: #1a0a2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    position: relative;
+    overflow: hidden;
+    animation: rotateBorderReverse 6s linear infinite;
+  }
+
+  @keyframes rotateBorderReverse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+  }
+
+  .avatar-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  /* 头像轮播 */
+  .avatar-slider {
+    width: 100%; height: 100%;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .avatar-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  .avatar-slide.active {
+    opacity: 1;
+  }
+
+  /* 左右切换按钮 */
+  .avatar-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(232,121,249,0.25);
+    border: 1px solid rgba(232,121,249,0.4);
+    color: #fff;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    z-index: 10;
+    padding: 0;
+    backdrop-filter: blur(4px);
+  }
+
+  .avatar-btn:hover {
+    background: rgba(232,121,249,0.5);
+    box-shadow: 0 0 10px rgba(232,121,249,0.4);
+  }
+
+  .avatar-prev { left: -14px; }
+  .avatar-next { right: -14px; }
+
+  /* 小圆点指示器 */
+  .avatar-dots {
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+  }
+
+  .avatar-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: rgba(232,121,249,0.3);
+    border: 1px solid rgba(232,121,249,0.5);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .avatar-dot.active {
+    background: var(--primary);
+    box-shadow: 0 0 6px rgba(232,121,249,0.6);
+    transform: scale(1.3);
+  }
+
+  .avatar-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,110,180,0.08), rgba(192,132,252,0.08));
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ===== Hero 头像 ===== */
+  .hero-avatar-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.9s ease 0s both;
+  }
+
+  .hero-avatar-ring {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    background: conic-gradient(#ff6eb4, #c084fc, #ffb347, #ff6eb4);
+    padding: 3px;
+    animation: rotateBorder 6s linear infinite;
+    box-shadow: 0 0 25px rgba(232,121,249,0.5), 0 0 60px rgba(232,121,249,0.15);
+    position: relative;
+  }
+
+  .hero-avatar-img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    background: #1a0a2e;
+    animation: rotateBorderReverse 6s linear infinite;
+  }
+
+  /* ===== 时间轴右侧装饰头像 ===== */
+  .timeline-side-avatar {
+    position: absolute;
+    right: -20px;
+    top: 60px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.4s;
+  }
+
+  .timeline-side-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    filter: saturate(1.3) brightness(1.1);
+  }
+
+  .timeline-side-glow {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,121,249,0.3), transparent 70%);
+    animation: orbFloat 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  #timeline:hover .timeline-side-avatar {
+    opacity: 0.28;
+  }
+
+  @media (max-width: 900px) {
+    .timeline-side-avatar { display: none; }
+  }
+
+  /* 头像装饰心心 */
+  .avatar-deco {
+    position: absolute;
+    font-size: 1.2rem;
+    animation: floatHeart 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .avatar-deco:nth-child(1) { top: 10px; right: -10px; animation-delay: 0s; }
+  .avatar-deco:nth-child(2) { bottom: 20px; left: -15px; animation-delay: 1s; font-size: 0.9rem; }
+  .avatar-deco:nth-child(3) { top: 50%; right: -20px; animation-delay: 2s; font-size: 0.8rem; }
+
+  @keyframes floatHeart {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
+    50% { transform: translateY(-10px) scale(1.2); opacity: 1; }
+  }
+
+  .about-text h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  .about-text p {
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  .about-text p strong {
+    color: var(--primary);
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 16px;
+    border: 1px solid rgba(232,121,249,0.1);
+    border-radius: 8px;
+    background: var(--bg-card);
+    transition: all 0.3s;
+  }
+
+  .stat-item:hover {
+    border-color: var(--primary);
+    box-shadow: var(--glow-cyan);
+    transform: translateY(-4px);
+  }
+
+  .stat-num {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* ===== 时间轴 ===== */
+  #timeline { background: linear-gradient(180deg, transparent, rgba(232,121,249,0.02), transparent); }
+
+  .timeline-wrap {
+    position: relative;
+    padding: 0 0 0 72px;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .timeline-line {
+    position: absolute;
+    left: 22px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg,
+      rgba(232,121,249,0) 0%,
+      var(--primary) 8%,
+      var(--accent) 50%,
+      var(--secondary) 92%,
+      rgba(251,113,133,0) 100%
+    );
+    box-shadow: 0 0 12px rgba(232,121,249,0.25);
+  }
+
+  /* 时间轴线上的流动光点 */
+  .timeline-line::after {
+    content: '';
+    position: absolute;
+    left: -3px;
+    width: 8px;
+    height: 60px;
+    background: linear-gradient(180deg, transparent, rgba(232,121,249,0.9), transparent);
+    border-radius: 4px;
+    animation: flowDown 4s ease-in-out infinite;
+  }
+
+  @keyframes flowDown {
+    0%   { top: 0%; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* 圆点 */
+  .timeline-dot {
+    position: absolute;
+    left: -58px;
+    top: 22px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    background: var(--bg-dark);
+    box-shadow: var(--glow-cyan);
+    z-index: 2;
+    transition: transform 0.3s;
+  }
+
+  .timeline-dot::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: rgba(232,121,249,0.3);
+  }
+
+  .timeline-item:hover .timeline-dot {
+    transform: scale(1.3);
+  }
+
+  .timeline-dot.active {
+    background: var(--primary);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .timeline-dot.active::after {
+    background: rgba(255,255,255,0.5);
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(232,121,249,0.5), var(--glow-cyan); }
+    50% { box-shadow: 0 0 0 12px rgba(232,121,249,0), var(--glow-cyan); }
+  }
+
+  /* 卡片主体 */
+  .timeline-card {
+    background: linear-gradient(135deg, rgba(232,121,249,0.05) 0%, rgba(167,139,250,0.04) 100%);
+    border: 1px solid rgba(232,121,249,0.12);
+    border-left: 3px solid rgba(232,121,249,0.4);
+    border-radius: 12px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* 卡片顶部彩色渐变条 */
+  .timeline-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  /* 卡片内部光晕 */
+  .timeline-card::after {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,121,249,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    transition: opacity 0.3s;
+    opacity: 0;
+  }
+
+  .timeline-card:hover {
+    border-color: rgba(232,121,249,0.35);
+    border-left-color: var(--primary);
+    box-shadow: 0 8px 32px rgba(232,121,249,0.15), 0 0 0 1px rgba(232,121,249,0.08);
+    transform: translateX(6px);
+  }
+
+  .timeline-card:hover::before { opacity: 1; }
+  .timeline-card:hover::after  { opacity: 1; }
+
+  /* 卡片头部区域 */
+  .card-header-area {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid rgba(232,121,249,0.08);
+  }
+
+  /* 左侧公司色块 */
+  .card-company-bar {
+    width: 5px;
+    flex-shrink: 0;
+    border-radius: 0;
+    background: linear-gradient(180deg, var(--primary), var(--accent));
+    display: none; /* 已用border-left代替 */
+  }
+
+  /* 卡片头部内容 */
+  .card-header-content {
+    padding: 20px 24px 16px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .card-header-left {}
+
+  .timeline-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+
+  .timeline-date {
+    font-size: 0.72rem;
+    color: var(--primary);
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    background: rgba(232,121,249,0.08);
+    padding: 3px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(232,121,249,0.2);
+  }
+
+  .timeline-company {
+    font-size: 0.78rem;
+    color: rgba(232,121,249,0.6);
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  .timeline-badge {
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .badge-current {
+    background: rgba(232,121,249,0.15);
+    color: var(--primary);
+    border: 1px solid rgba(232,121,249,0.35);
+    animation: badgePulse 2s ease-in-out infinite;
+  }
+
+  @keyframes badgePulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(232,121,249,0.3); }
+    50% { opacity: 0.7; box-shadow: none; }
+  }
+
+  .badge-prev {
+    background: rgba(100,116,139,0.12);
+    color: var(--text-muted);
+    border: 1px solid rgba(100,116,139,0.25);
+  }
+
+  .timeline-role {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  .timeline-dept {
+    font-size: 0.82rem;
+    color: var(--accent2);
+    font-weight: 500;
+    opacity: 0.85;
+  }
+
+  /* 卡片正文区域 */
+  .card-body-area {
+    padding: 20px 24px 22px;
+  }
+
+  .timeline-desc {
+    color: rgba(240,230,255,0.7);
+    font-size: 0.88rem;
+    line-height: 1.8;
+  }
+
+  .timeline-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 18px;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    padding: 4px 12px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+    font-weight: 500;
+    transition: transform 0.2s;
+  }
+
+  .tag:hover { transform: translateY(-2px); }
+
+  .tag-cyan {
+    background: rgba(232,121,249,0.08);
+    color: var(--primary);
+    border: 1px solid rgba(232,121,249,0.2);
+  }
+
+  .tag-purple {
+    background: rgba(167,139,250,0.1);
+    color: #a78bfa;
+    border: 1px solid rgba(167,139,250,0.22);
+  }
+
+  .tag-pink {
+    background: rgba(251,113,133,0.08);
+    color: #fb7185;
+    border: 1px solid rgba(251,113,133,0.2);
+  }
+
+  .tag-green {
+    background: rgba(16,185,129,0.08);
+    color: #34d399;
+    border: 1px solid rgba(16,185,129,0.2);
+  }
+
+  /* ===== 核心技能 ===== */
+  #skills { background: linear-gradient(180deg, transparent, rgba(167,139,250,0.04), transparent); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .skill-card {
+    background: var(--bg-card2);
+    border: 1px solid rgba(167,139,250,0.15);
+    border-radius: 12px;
+    padding: 28px;
+    transition: all 0.3s;
+    opacity: 0;
+    transform: translateY(30px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .skill-card:hover::before { opacity: 1; }
+
+  .skill-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .skill-card:hover {
+    border-color: rgba(167,139,250,0.4);
+    box-shadow: var(--glow-purple);
+    transform: translateY(-6px);
+  }
+
+  .skill-icon {
+    font-size: 2.2rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .skill-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .skill-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .skill-bar-wrap {
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    height: 4px;
+    overflow: hidden;
+  }
+
+  .skill-bar {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--primary));
+    box-shadow: var(--glow-cyan);
+    width: 0;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ===== 项目亮点 ===== */
+  #projects { background: linear-gradient(180deg, transparent, rgba(255,0,110,0.03), transparent); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 32px;
+    transition: all 0.3s;
+    opacity: 0;
+    transform: translateY(30px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(232,121,249,0.04), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 12px;
+  }
+
+  .project-card:hover {
+    border-color: rgba(232,121,249,0.2);
+    box-shadow: var(--glow-cyan);
+    transform: translateY(-6px);
+  }
+
+  .project-card:hover::after { opacity: 1; }
+
+  .project-num {
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgba(232,121,249,0.08);
+    position: absolute;
+    top: 16px; right: 24px;
+    font-family: monospace;
+    line-height: 1;
+  }
+
+  .project-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .project-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .project-desc {
+    font-size: 0.87rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
+  .project-highlight {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: rgba(232,121,249,0.04);
+    border-left: 2px solid var(--primary);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.8rem;
+    color: var(--primary);
+  }
+
+  /* ===== 技术标签云 ===== */
+  #tech-cloud {
+    padding: 80px 0;
+    background: linear-gradient(180deg, transparent, rgba(232,121,249,0.02), transparent);
+  }
+
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .cloud-tag {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: default;
+    transition: all 0.3s;
+    letter-spacing: 0.5px;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+
+  .cloud-tag:hover {
+    transform: translateY(-4px) scale(1.05);
+  }
+
+  .cloud-tag.size-lg { font-size: 1.1rem; padding: 14px 28px; }
+  .cloud-tag.size-md { font-size: 0.9rem; padding: 11px 22px; }
+  .cloud-tag.size-sm { font-size: 0.78rem; padding: 9px 18px; }
+
+  .cloud-tag.c1 { background: rgba(232,121,249,0.1); color: var(--primary); border: 1px solid rgba(232,121,249,0.25); }
+  .cloud-tag.c1:hover { background: rgba(232,121,249,0.2); box-shadow: var(--glow-cyan); }
+  .cloud-tag.c2 { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.25); }
+  .cloud-tag.c2:hover { background: rgba(167,139,250,0.22); box-shadow: var(--glow-purple); }
+  .cloud-tag.c3 { background: rgba(255,0,110,0.08); color: #fb7185; border: 1px solid rgba(255,0,110,0.2); }
+  .cloud-tag.c3:hover { background: rgba(255,0,110,0.15); box-shadow: var(--glow-pink); }
+  .cloud-tag.c4 { background: rgba(16,185,129,0.08); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
+  .cloud-tag.c4:hover { background: rgba(16,185,129,0.15); box-shadow: 0 0 20px rgba(16,185,129,0.3); }
+  .cloud-tag.c5 { background: rgba(245,158,11,0.08); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+  .cloud-tag.c5:hover { background: rgba(245,158,11,0.15); box-shadow: 0 0 20px rgba(245,158,11,0.3); }
+
+  /* ===== 页脚 ===== */
+  /* ===== 联系我 ===== */
+  #contact { background: linear-gradient(180deg, transparent, rgba(232,121,249,0.03), transparent); }
+
+  .contact-grid {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .contact-card {
+    background: linear-gradient(135deg, rgba(232,121,249,0.06), rgba(167,139,250,0.04));
+    border: 1px solid rgba(232,121,249,0.15);
+    border-radius: 16px;
+    padding: 36px 44px;
+    text-align: center;
+    min-width: 200px;
+    flex: 1;
+    max-width: 260px;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .contact-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(232,121,249,0.35);
+    box-shadow: 0 12px 36px rgba(232,121,249,0.15);
+  }
+
+  .contact-card:hover::before { opacity: 1; }
+
+  .contact-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+  }
+
+  .contact-label {
+    font-size: 0.72rem;
+    color: var(--primary);
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
+  .contact-value {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  .contact-value a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-value a:hover {
+    color: var(--primary);
+  }
+
+  /* 导航联系我高亮 */
+  .nav-contact {
+    color: var(--primary) !important;
+    border: 1px solid rgba(232,121,249,0.35);
+    padding: 5px 16px !important;
+    border-radius: 20px;
+    transition: all 0.25s !important;
+  }
+
+  .nav-contact:hover {
+    background: rgba(232,121,249,0.12) !important;
+    box-shadow: 0 0 12px rgba(232,121,249,0.25);
+  }
+
+  footer {
+    padding: 60px 0 40px;
+    text-align: center;
+    border-top: 1px solid rgba(232,121,249,0.08);
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-name {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .footer-role {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+  }
+
+  .footer-divider {
+    width: 100px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    margin: 0 auto 24px;
+  }
+
+  .footer-copy {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+  }
+
+  .footer-copy span { color: var(--primary); }
+
+  /* ===== 动画 ===== */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 0.75rem; }
+    .about-grid { grid-template-columns: 1fr; text-align: center; }
+    .about-stats { grid-template-columns: repeat(3, 1fr); }
+    .timeline-wrap { padding-left: 40px; }
+    .timeline-dot { left: -32px; }
+    .section-wrap { padding: 70px 0; }
+    .hero-cta { flex-direction: column; align-items: center; }
+  }
+
+  @media (max-width: 480px) {
+    .nav-links { display: none; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ===== 扫描线效果 ===== */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    animation: scanLine 6s linear infinite;
+    z-index: 999;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  @keyframes scanLine {
+    0% { top: -2px; }
+    100% { top: 100vh; }
+  }
+
+  /* ===== 角落装饰 ===== */
+  .corner-deco {
+    position: absolute;
+    width: 20px; height: 20px;
+    opacity: 0.4;
+  }
+
+  .corner-deco.tl { top: 12px; left: 12px; border-top: 2px solid var(--primary); border-left: 2px solid var(--primary); }
+  .corner-deco.tr { top: 12px; right: 12px; border-top: 2px solid var(--primary); border-right: 2px solid var(--primary); }
+  .corner-deco.bl { bottom: 12px; left: 12px; border-bottom: 2px solid var(--primary); border-left: 2px solid var(--primary); }
+  .corner-deco.br { bottom: 12px; right: 12px; border-bottom: 2px solid var(--primary); border-right: 2px solid var(--primary); }
+</style>
+</head>
+<body>
+
+<canvas id="canvas-bg"></canvas>
+
+<!-- 导航 -->
+<nav>
+  <div class="nav-logo">BAIKABAI.EXE</div>
+  <ul class="nav-links">
+    <li><a href="#about">关于</a></li>
+    <li><a href="#timeline">经历</a></li>
+    <li><a href="#skills">技能</a></li>
+    <li><a href="#projects">项目</a></li>
+    <li><a href="#tech-cloud">技术栈</a></li>
+    <li><a href="#contact" class="nav-contact">联系我</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-glow-orb orb1"></div>
+  <div class="hero-glow-orb orb2"></div>
+  <div class="hero-glow-orb orb3"></div>
+
+  <div style="position:relative;z-index:2;">
+    <!-- Hero 头像 -->
+    <div class="hero-avatar-wrap">
+      <div class="hero-avatar-ring">
+        <img class="hero-avatar-img" id="heroAvatarImg" src="https://zhiyan-ai-agent-with-1258344702.cos.ap-guangzhou.tencentcos.cn/copilot/13887596-f7d6-4847-a816-eb815e14e90d/image.png" alt="avatar" />
+      </div>
+    </div>
+    <div class="hero-badge">GAME SECURITY · NLP · AI ADVERSARIAL · ALGORITHM STRATEGY</div>
+    <h1 class="hero-name">
+      <span class="name-cn">Baikabai</span>
+      <span class="name-en">GAME SECURITY ENGINEER</span>
+    </h1>
+    <p class="hero-title">
+      <span>游戏安全</span> · <span>NLP / 内容安全</span> · <span>恶意对抗</span> · <span>算法策略工程师</span>
+    </p>
+    <div id="typewriter"></div>
+    <div class="hero-cta">
+      <a href="#timeline" class="btn-primary">查看经历</a>
+      <a href="#skills" class="btn-outline">核心技能</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>SCROLL</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- 关于我 -->
+<section id="about">
+  <div class="section-wrap container">
+    <div class="section-header">
+      <div class="section-label">// ABOUT ME</div>
+      <h2 class="section-title">关于我</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-avatar-wrap">
+        <div style="position:relative; display:inline-block;">
+          <div class="avatar-ring">
+            <div class="avatar-inner">
+              <!-- 头像轮播 -->
+              <div class="avatar-slider" id="avatarSlider">
+                <img class="avatar-slide" src="https://zhiyan-ai-agent-with-1258344702.cos.ap-guangzhou.tencentcos.cn/copilot/13887596-f7d6-4847-a816-eb815e14e90d/image.png" alt="avatar1" />
+                <img class="avatar-slide active" src="https://zhiyan-ai-agent-with-1258344702.cos.ap-guangzhou.tencentcos.cn/copilot/2e41fef6-904c-45ce-b9ae-719c03cda5a9/image.png" alt="avatar2" />
+                <img class="avatar-slide" src="https://zhiyan-ai-agent-with-1258344702.cos.ap-guangzhou.tencentcos.cn/copilot/7c749b9f-e2da-4336-bcf3-b4529ba79b31/image.png" alt="avatar3" />
+              </div>
+            </div>
+          </div>
+          <!-- 左右切换按钮 -->
+          <button class="avatar-btn avatar-prev" onclick="switchAvatar(-1)">‹</button>
+          <button class="avatar-btn avatar-next" onclick="switchAvatar(1)">›</button>
+          <!-- 小圆点指示器 -->
+          <div class="avatar-dots">
+            <span class="avatar-dot" onclick="goAvatar(0)"></span>
+            <span class="avatar-dot active" onclick="goAvatar(1)"></span>
+            <span class="avatar-dot" onclick="goAvatar(2)"></span>
+          </div>
+          <span class="avatar-deco">💕</span>
+          <span class="avatar-deco">✨</span>
+          <span class="avatar-deco">🌸</span>
+        </div>
+      </div>
+      <div class="about-text">
+        <h3>游戏安全 · NLP · 黑产对抗专家 ✨</h3>
+        <p>精通 <strong>NLP 内容安全、机器学习对抗与游戏黑产治理</strong>，拥有从0到1构建多语言安全模型的完整经验。</p>
+        <p>曾就职于<strong>网易互娱</strong>，主导海外内容安全 NLP 模型体系建设，覆盖日/英/俄/西班牙语多语言辱骂与色情检测，准确率 99.99%+，效果超越竞品。</p>
+        <p>现就职于<strong>腾讯恶意对抗组</strong>，负责《三角洲行动》经济安全算法与策略体系，主导多模态大模型对抗、人脸识别安全等前沿方向研发。</p>
+        <div class="about-stats">
+          <div class="stat-item">
+            <span class="stat-num">5+</span>
+            <div class="stat-label">年算法经验</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">4语</span>
+            <div class="stat-label">多语言模型</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">99.99%</span>
+            <div class="stat-label">内容安全准确率</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 职业时间轴 -->
+<section id="timeline">
+  <div class="section-wrap container" style="position:relative;">
+    <!-- 时间轴右侧装饰头像 -->
+    <div class="timeline-side-avatar">
+      <img id="timelineAvatarImg" src="https://zhiyan-ai-agent-with-1258344702.cos.ap-guangzhou.tencentcos.cn/copilot/7c749b9f-e2da-4336-bcf3-b4529ba79b31/image.png" alt="avatar" />
+      <div class="timeline-side-glow"></div>
+    </div>
+    <div class="section-header">
+      <div class="section-label">// CAREER TIMELINE</div>
+      <h2 class="section-title">职业经历</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="timeline-wrap">
+      <div class="timeline-line"></div>
+
+      <!-- 腾讯 -->
+      <div class="timeline-item">
+        <div class="timeline-dot active"></div>
+        <div class="timeline-card">
+          <div class="card-header-area">
+            <div class="card-header-content">
+              <div class="card-header-left">
+                <div class="timeline-meta">
+                  <span class="timeline-date">2024.08 — 至今</span>
+                  <span class="timeline-company">腾讯科技</span>
+                  <span class="timeline-badge badge-current">● 在职</span>
+                </div>
+                <div class="timeline-role">算法策略工程师</div>
+                <div class="timeline-dept">游戏安全部 · 恶意对抗组</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body-area">
+            <div class="timeline-desc">
+              负责《三角洲行动》经济安全体系建设，主导经济系统风险策略设计与落地。深度参与黑产对抗全链路，从数据挖掘、模型训练到策略上线形成闭环。
+              <br><br>
+              <strong style="color:var(--accent2)">① 脚本跑刀黑产打击</strong><br>
+              构建脚本跑刀行为识别模型，覆盖云手机、模拟器等批量黑产账号，<strong style="color:#fbbf24">精确率 & 覆盖率均达 99%+</strong>，监控名单覆盖大盘百万量级异常账号，人均流水异常倍数达大盘 15x+。
+              <br><br>
+              <strong style="color:var(--accent)">② 撞车交易黑产打击</strong><br>
+              针对游戏内撞车交易黑产行为，构建交易异常检测模型，结合图关系分析与行为序列建模，<strong style="color:#fbbf24">精确率 & 覆盖率均达 99%+</strong>，有效切断黑产洗钱链路。
+              <br><br>
+              <strong style="color:var(--secondary)">③ 多模态大模型对抗 & 人脸识别安全</strong><br>
+              探索 LLM/VLM 在游戏安全对抗中的前沿应用；主导人脸识别安全研发，覆盖活体检测绕过对抗与深度伪造检测，保障实名认证体系有效性。
+            </div>
+            <div class="timeline-tags">
+              <span class="tag tag-cyan">三角洲行动</span>
+              <span class="tag tag-cyan">经济安全算法</span>
+              <span class="tag tag-purple">脚本跑刀打击</span>
+              <span class="tag tag-purple">撞车交易打击</span>
+              <span class="tag tag-pink">黑产风险治理</span>
+              <span class="tag tag-pink">多模态大模型</span>
+              <span class="tag tag-green">人脸识别安全</span>
+              <span class="tag tag-green">模型对抗</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 网易 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="card-header-area">
+            <div class="card-header-content">
+              <div class="card-header-left">
+                <div class="timeline-meta">
+                  <span class="timeline-date">2023.04 — 2024.08</span>
+                  <span class="timeline-company">网易互动娱乐（正职）</span>
+                  <span class="timeline-badge badge-prev">已离职</span>
+                </div>
+                <div class="timeline-role">NLP 算法工程师</div>
+                <div class="timeline-dept">海外内容安全模型方向</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body-area">
+            <div class="timeline-desc">
+              <strong style="color:var(--accent2)">① 多语言内容安全模型</strong><br>
+              从0到1规划并部署《荒野行动》《第五人格》《黎明杀机》辱骂/色情模型（日/英/俄），及《Blood Strike》辱骂/色情模型（英/西班牙语/俄语）。准确率 <strong style="color:#fbbf24">99.99%+</strong>，精确率 80%+，F1-score 0.75+，日语/英语效果超越竞品。
+              <br><br>
+              <strong style="color:var(--accent)">② 未成年性诱拐打击模型（国内首创）</strong><br>
+              结合 LLM + LoRA + SFT 前沿技术，少量数据精准判别7种分类，组合行为模型，精确率 <strong style="color:#fbbf24">96%+</strong>。已完成国内外专利申请及网易互娱创新奖申请。
+              <br><br>
+              <strong style="color:var(--secondary)">③ 账号欺诈 & 金钱诈骗打击</strong><br>
+              欺诈内容检测模型精确率 <strong style="color:#fbbf24">99%+</strong>，实现自动处罚流程，极大节省人力成本，有效避免误伤。
+              <br><br>
+              <strong style="color:#34d399">④ 标注 & 审核团队管理</strong><br>
+              从0到1构建标注团队标准化 SOP，基于开源 Label Studio 部署线上标注平台；建立质检和复审环节，有效提升审核准确率。
+              <br><br>
+              <strong style="color:#fbbf24">⑤ 演员/挂机行为识别模型</strong><br>
+              针对《第五人格》演员行为与挂机行为研发专项识别模型，精确率 80%+。
+            </div>
+            <div class="timeline-tags">
+              <span class="tag tag-cyan">NLP</span>
+              <span class="tag tag-cyan">内容安全</span>
+              <span class="tag tag-purple">LLM / LoRA / SFT</span>
+              <span class="tag tag-purple">多语言模型</span>
+              <span class="tag tag-pink">未成年保护</span>
+              <span class="tag tag-green">Label Studio</span>
+              <span class="tag tag-green">自动处罚流程</span>
+              <span class="tag tag-pink">专利申请</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 大和证券 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="card-header-area">
+            <div class="card-header-content">
+              <div class="card-header-left">
+                <div class="timeline-meta">
+                  <span class="timeline-date">2022.03 — 2023.03</span>
+                  <span class="timeline-company">大和証券グループ本社（日本）</span>
+                  <span class="timeline-badge badge-prev">研究实习</span>
+                </div>
+                <div class="timeline-role">共同研究员</div>
+                <div class="timeline-dept">校内联合研究项目</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body-area">
+            <div class="timeline-desc">
+              在日本顶级证券公司参与校内联合研究项目，积累金融数据分析与量化研究经验，培养严谨学术研究能力与跨文化协作能力。
+            </div>
+            <div class="timeline-tags">
+              <span class="tag tag-cyan">数据分析</span>
+              <span class="tag tag-purple">量化研究</span>
+              <span class="tag tag-green">日本金融</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 教育经历 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="card-header-area">
+            <div class="card-header-content">
+              <div class="card-header-left">
+                <div class="timeline-meta">
+                  <span class="timeline-date">2017.04 — 2023.03</span>
+                  <span class="timeline-company">茨城大学（日本）</span>
+                  <span class="timeline-badge badge-prev">本硕连读</span>
+                </div>
+                <div class="timeline-role">知能系统 · 机械智能系统</div>
+                <div class="timeline-dept">本科：智能系统（2017—2021）&nbsp;·&nbsp; 硕士：机械智能系统（2021—2023）</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body-area">
+            <div class="timeline-desc">
+              🏆 <strong style="color:#fbbf24">全额学费减免</strong>（优秀学术奖励）<br><br>
+              核心课程：数据分析、自然语言处理、人工智能、机器学习、强化学习、英文学术发表与写作、数据结构、计算机基本原理、高数
+            </div>
+            <div class="timeline-tags">
+              <span class="tag tag-cyan">NLP</span>
+              <span class="tag tag-cyan">机器学习</span>
+              <span class="tag tag-purple">强化学习</span>
+              <span class="tag tag-green">全额奖学金</span>
+              <span class="tag tag-pink">日本留学</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 核心技能 -->
+<section id="skills">
+  <div class="section-wrap container">
+    <div class="section-header">
+      <div class="section-label">// CORE SKILLS</div>
+      <h2 class="section-title">核心能力</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <span class="skill-icon">🗣️</span>
+        <div class="skill-name">NLP · 多语言内容安全</div>
+        <div class="skill-desc">主导日/英/俄/西班牙语多语言辱骂与色情检测模型研发，准确率 99.99%+，F1-score 0.75+，日语/英语效果超越竞品，覆盖荒野行动、第五人格等多款海外产品。</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="97%"></div></div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon">🤖</span>
+        <div class="skill-name">LLM · LoRA · SFT 大模型微调</div>
+        <div class="skill-desc">利用 LLM + LoRA + SFT 前沿技术，结合少量数据完成7种分类精准判别；主导国内首个未成年性诱拐行为打击模型，精确率 96%+，已申请国内外专利。</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="88%"></div></div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon">🎮</span>
+        <div class="skill-name">游戏经济安全 · 黑产对抗</div>
+        <div class="skill-desc">主导脚本跑刀 & 撞车交易双向黑产打击，<strong>精确率 & 覆盖率均达 99%+</strong>。脚本跑刀覆盖云手机/模拟器批量账号，人均流水异常 15x+；撞车交易结合图关系分析与行为序列建模，有效切断虚拟资产洗钱链路。</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="99%"></div></div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon">🧠</span>
+        <div class="skill-name">多模态大模型对抗</div>
+        <div class="skill-desc">研究大模型在游戏安全领域的攻防应用，探索 LLM/VLM 对抗技术，构建基于大模型的智能安全分析与决策系统，持续推动游戏安全向 AI-Native 演进。</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="85%"></div></div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon">👁️</span>
+        <div class="skill-name">人脸识别安全</div>
+        <div class="skill-desc">深入研究人脸识别系统安全风险，包括活体检测对抗、深度伪造检测等，保障游戏实名认证体系安全可靠，守护未成年人保护机制有效性。</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="82%"></div></div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon">📊</span>
+        <div class="skill-name">数据分析 · 标注体系建设</div>
+        <div class="skill-desc">从0到1构建标注团队标准化 SOP，基于 Label Studio 部署线上标注平台；精通 Python / PyTorch / sklearn / HuggingFace，熟悉 MySQL、Hadoop 大数据平台。</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 项目亮点 -->
+<section id="projects">
+  <div class="section-wrap container">
+    <div class="section-header">
+      <div class="section-label">// KEY PROJECTS</div>
+      <h2 class="section-title">重点项目</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-num">01</div>
+        <span class="project-icon">🌐</span>
+        <div class="project-title">海外多语言内容安全模型体系</div>
+        <div class="project-desc">从0到1规划并部署荒野行动、第五人格、黎明杀机、Blood Strike 等海外产品的辱骂/色情检测模型，覆盖日语、英语、俄语、西班牙语四种语言，准确率 99.99%+。</div>
+        <div class="project-highlight">🏆 日语/英语效果超越竞品，精确率 80%+，F1-score 0.75+</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">02</div>
+        <span class="project-icon">🛡️</span>
+        <div class="project-title">未成年性诱拐行为打击模型（国内首创）</div>
+        <div class="project-desc">结合 LLM + LoRA + SFT 前沿技术，少量数据精准判别7种分类，组合异常玩家行为模型，高效识别对未成年人实施性诱拐的玩家，组合模型精确率 96%+。</div>
+        <div class="project-highlight">📜 已完成国内外专利申请 + 网易互娱创新奖申请</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">03</div>
+        <span class="project-icon">⚔️</span>
+        <div class="project-title">《三角洲行动》脚本跑刀打击专项</div>
+        <div class="project-desc">基于行为序列分析与机器学习模型，构建脚本跑刀识别系统，实现对批量云手机、模拟器黑产账号的精准识别与实时打击。覆盖鸿蒙端、安卓端多终端类型，持续迭代对抗黑产进化。</div>
+        <div class="project-highlight">🎯 精确率 & 覆盖率 99%+，监控名单覆盖大盘百万量级，人均流水异常 15x+</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">04</div>
+        <span class="project-icon">💱</span>
+        <div class="project-title">《三角洲行动》撞车交易黑产打击</div>
+        <div class="project-desc">针对玩家间故意输赢转移虚拟资产的撞车交易黑产，构建交易异常检测模型。结合图关系网络分析（账号关联图谱）与行为序列建模，识别高频可疑交易对，有效切断黑产洗钱链路，保障游戏经济系统健康。</div>
+        <div class="project-highlight">💰 精确率 & 覆盖率 99%+，图关系 + 行为双模型联合打击</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">05</div>
+        <span class="project-icon">🎭</span>
+        <div class="project-title">《第五人格》演员/挂机行为识别</div>
+        <div class="project-desc">针对第五人格游戏中演员行为（故意输游戏）与挂机行为，研发专项识别模型，具备高效精准的检测能力，有效识别相关违规行为，维护游戏公平环境。</div>
+        <div class="project-highlight">⚡ 精确率 80%+，有效打击演员挂机黑产</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">06</div>
+        <span class="project-icon">🏷️</span>
+        <div class="project-title">标注平台 & 审核体系建设</div>
+        <div class="project-desc">从0到1构建标注团队标准化 SOP，基于开源 Label Studio 部署线上标注平台，实现标注工作统一管理；优化审核系统 SOP，建立质检和复审环节，提升审核准确率。</div>
+        <div class="project-highlight">💡 团队管理 + 平台建设，从0到1的完整体系</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 技术标签云 -->
+<section id="tech-cloud">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">// TECH STACK</div>
+      <h2 class="section-title">技术标签</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="tag-cloud">
+      <span class="cloud-tag c1 size-lg">NLP</span>
+      <span class="cloud-tag c2 size-lg">机器学习</span>
+      <span class="cloud-tag c3 size-md">游戏安全</span>
+      <span class="cloud-tag c1 size-md">内容安全</span>
+      <span class="cloud-tag c4 size-lg">多语言模型</span>
+      <span class="cloud-tag c5 size-md">LLM</span>
+      <span class="cloud-tag c2 size-md">LoRA / SFT</span>
+      <span class="cloud-tag c1 size-sm">PyTorch</span>
+      <span class="cloud-tag c3 size-lg">黑产对抗</span>
+      <span class="cloud-tag c4 size-sm">HuggingFace</span>
+      <span class="cloud-tag c5 size-md">多模态大模型</span>
+      <span class="cloud-tag c1 size-md">经济安全算法</span>
+      <span class="cloud-tag c2 size-sm">文本分类</span>
+      <span class="cloud-tag c3 size-sm">人脸识别安全</span>
+      <span class="cloud-tag c4 size-md">脚本跑刀打击</span>
+      <span class="cloud-tag c5 size-md">撞车交易打击</span>
+      <span class="cloud-tag c1 size-sm">图关系分析</span>
+      <span class="cloud-tag c2 size-sm">Label Studio</span>
+      <span class="cloud-tag c1 size-sm">Python</span>
+      <span class="cloud-tag c2 size-md">行为序列分析</span>
+      <span class="cloud-tag c3 size-sm">爬虫技术</span>
+      <span class="cloud-tag c4 size-sm">MySQL / Hadoop</span>
+      <span class="cloud-tag c5 size-lg">三角洲行动</span>
+      <span class="cloud-tag c1 size-sm">sklearn</span>
+      <span class="cloud-tag c2 size-sm">VLM</span>
+      <span class="cloud-tag c3 size-md">未成年保护</span>
+      <span class="cloud-tag c4 size-sm">异常检测</span>
+      <span class="cloud-tag c5 size-sm">专利申请</span>
+      <span class="cloud-tag c1 size-md">日语 · 英语 · 俄语</span>
+    </div>
+  </div>
+</section>
+
+<!-- 联系我 -->
+<section id="contact">
+  <div class="section-wrap container">
+    <div class="section-header">
+      <div class="section-label">// CONTACT ME</div>
+      <h2 class="section-title">联系我</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">👤</div>
+        <div class="contact-label">姓名</div>
+        <div class="contact-value">骆子杰</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📱</div>
+        <div class="contact-label">电话</div>
+        <div class="contact-value"><a href="tel:17859788696">17859788696</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-label">邮箱</div>
+        <div class="contact-value"><a href="mailto:baika0906@163.com">baika0906@163.com</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer>
+  <div class="container">
+    <div class="footer-name">Baikabai</div>
+    <div class="footer-role">NLP · GAME SECURITY · ADVERSARIAL AI · ALGORITHM STRATEGY</div>
+    <div class="footer-divider"></div>
+    <div class="footer-copy">
+      <span>网易互娱</span> 2023—2024 &nbsp;→&nbsp; <span>腾讯科技</span> 2024—PRESENT
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== 粒子背景 =====
+const canvas = document.getElementById('canvas-bg');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const particles = [];
+const NUM = 80;
+
+for (let i = 0; i < NUM; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
+    r: Math.random() * 1.5 + 0.3,
+    opacity: Math.random() * 0.5 + 0.1,
+    color: Math.random() > 0.5 ? '232,121,249' : '167,139,250'
+  });
+}
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < 0) p.x = canvas.width;
+    if (p.x > canvas.width) p.x = 0;
+    if (p.y < 0) p.y = canvas.height;
+    if (p.y > canvas.height) p.y = 0;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${p.color},${p.opacity})`;
+    ctx.fill();
+
+    for (let j = i + 1; j < particles.length; j++) {
+      const q = particles[j];
+      const dx = p.x - q.x, dy = p.y - q.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(q.x, q.y);
+        ctx.strokeStyle = `rgba(232,121,249,${0.08 * (1 - dist / 120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// ===== 打字机效果 =====
+const phrases = [
+  '守护游戏经济安全，打击黑产于无形',
+  'NLP × 内容安全 · 99.99% 准确率的极致追求',
+  '多语言辱骂/色情模型 · 日英俄西班牙语全覆盖',
+  '多模态大模型 × 游戏安全对抗',
+  '未成年性诱拐行为模型 · 国内首创 · 精确率96%+',
+  '算法策略工程师 · 恶意对抗专家'
+];
+let pi = 0, ci = 0, deleting = false, waiting = false;
+const tw = document.getElementById('typewriter');
+
+function type() {
+  if (waiting) return;
+  const phrase = phrases[pi];
+  if (!deleting) {
+    tw.textContent = phrase.slice(0, ci + 1);
+    ci++;
+    if (ci === phrase.length) {
+      waiting = true;
+      setTimeout(() => { waiting = false; deleting = true; type(); }, 2200);
+      return;
+    }
+    setTimeout(type, 60);
+  } else {
+    tw.textContent = phrase.slice(0, ci - 1);
+    ci--;
+    if (ci === 0) {
+      deleting = false;
+      pi = (pi + 1) % phrases.length;
+      setTimeout(type, 400);
+      return;
+    }
+    setTimeout(type, 30);
+  }
+}
+setTimeout(type, 800);
+
+// ===== 滚动动画 =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // 技能条动画
+      const bar = entry.target.querySelector('.skill-bar');
+      if (bar) {
+        setTimeout(() => {
+          bar.style.width = bar.dataset.width;
+        }, 200);
+      }
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.timeline-item, .skill-card, .project-card').forEach(el => {
+  observer.observe(el);
+});
+
+// ===== 技能卡片延迟 =====
+document.querySelectorAll('.skill-card').forEach((card, i) => {
+  card.style.transitionDelay = `${i * 0.1}s`;
+});
+
+document.querySelectorAll('.project-card').forEach((card, i) => {
+  card.style.transitionDelay = `${i * 0.08}s`;
+});
+
+// ===== 鼠标光晕跟随 =====
+const glow = document.createElement('div');
+glow.style.cssText = `
+  position: fixed;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,121,249,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  transition: left 0.15s ease, top 0.15s ease;
+`;
+document.body.appendChild(glow);
+
+document.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top = e.clientY + 'px';
+});
+
+// ===== 导航高亮 =====
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--primary)' : '';
+  });
+});
+
+// ===== 头像轮播 =====
+let avatarIndex = 1;
+const avatarSlides = document.querySelectorAll('.avatar-slide');
+const avatarDots = document.querySelectorAll('.avatar-dot');
+
+function updateAvatar() {
+  avatarSlides.forEach((s, i) => s.classList.toggle('active', i === avatarIndex));
+  avatarDots.forEach((d, i) => d.classList.toggle('active', i === avatarIndex));
+}
+
+function switchAvatar(dir) {
+  avatarIndex = (avatarIndex + dir + avatarSlides.length) % avatarSlides.length;
+  updateAvatar();
+}
+
+function goAvatar(idx) {
+  avatarIndex = idx;
+  updateAvatar();
+}
+
+// 每4秒自动切换
+setInterval(() => switchAvatar(1), 4000);
+</script>
+</body>
+</html>
