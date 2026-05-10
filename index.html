@@ -813,8 +813,6 @@
     gap: 10px;
   }
 
-  .card-header-left {}
-
   .timeline-meta {
     display: flex;
     align-items: center;
@@ -886,6 +884,57 @@
   /* 卡片正文区域 */
   .card-body-area {
     padding: 20px 24px 22px;
+  }
+
+  .tencent-card-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 178px;
+    gap: 22px;
+    align-items: center;
+  }
+
+  .tencent-badge-card {
+    position: relative;
+    margin: 0;
+    padding: 10px;
+    border: 1px solid rgba(232,121,249,0.28);
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(232,121,249,0.10), rgba(103,232,249,0.06));
+    box-shadow: 0 0 24px rgba(232,121,249,0.18);
+    overflow: hidden;
+  }
+
+  .tencent-badge-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.08), transparent);
+    transform: translateX(-100%);
+    animation: badgeShine 4s ease-in-out infinite;
+  }
+
+  @keyframes badgeShine {
+    0%, 60% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .tencent-badge-img {
+    display: block;
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.16);
+    position: relative;
+    z-index: 1;
+  }
+
+  .tencent-badge-caption {
+    position: relative;
+    z-index: 1;
+    margin-top: 8px;
+    text-align: center;
+    color: rgba(240,230,255,0.58);
+    font-size: 0.68rem;
+    letter-spacing: 0.8px;
   }
 
   .timeline-desc {
@@ -1287,6 +1336,8 @@
     .about-stats { grid-template-columns: repeat(3, 1fr); }
     .timeline-wrap { padding-left: 40px; }
     .timeline-dot { left: -32px; }
+    .tencent-card-layout { grid-template-columns: 1fr; }
+    .tencent-badge-card { width: min(180px, 70vw); justify-self: center; }
     .section-wrap { padding: 70px 0; }
     .hero-cta { flex-direction: column; align-items: center; }
   }
@@ -1473,27 +1524,35 @@
             </div>
           </div>
           <div class="card-body-area">
-            <div class="timeline-desc">
-              负责《三角洲行动》经济安全体系建设，主导经济系统风险策略设计与落地。深度参与黑产对抗全链路，从数据挖掘、模型训练到策略上线形成闭环。
-              <br><br>
-              <strong style="color:var(--accent2)">① 脚本跑刀黑产打击</strong><br>
-              构建脚本跑刀行为识别模型，覆盖云手机、模拟器等批量黑产账号，<strong style="color:#fbbf24">精确率 & 覆盖率均达 99%+</strong>，监控名单覆盖大盘百万量级异常账号，人均流水异常倍数达大盘 15x+。
-              <br><br>
-              <strong style="color:var(--accent)">② 撞车交易黑产打击</strong><br>
-              针对游戏内撞车交易黑产行为，构建交易异常检测模型，结合图关系分析与行为序列建模，<strong style="color:#fbbf24">精确率 & 覆盖率均达 99%+</strong>，有效切断黑产洗钱链路。
-              <br><br>
-              <strong style="color:var(--secondary)">③ 多模态大模型对抗 & 人脸识别安全</strong><br>
-              探索 LLM/VLM 在游戏安全对抗中的前沿应用；主导人脸识别安全研发，覆盖活体检测绕过对抗与深度伪造检测，保障实名认证体系有效性。
-            </div>
-            <div class="timeline-tags">
-              <span class="tag tag-cyan">三角洲行动</span>
-              <span class="tag tag-cyan">经济安全算法</span>
-              <span class="tag tag-purple">脚本跑刀打击</span>
-              <span class="tag tag-purple">撞车交易打击</span>
-              <span class="tag tag-pink">黑产风险治理</span>
-              <span class="tag tag-pink">多模态大模型</span>
-              <span class="tag tag-green">人脸识别安全</span>
-              <span class="tag tag-green">模型对抗</span>
+            <div class="tencent-card-layout">
+              <div class="tencent-card-main">
+                <div class="timeline-desc">
+                  负责《三角洲行动》经济安全体系建设，主导经济系统风险策略设计与落地。深度参与黑产对抗全链路，从数据挖掘、模型训练到策略上线形成闭环。
+                  <br><br>
+                  <strong style="color:var(--accent2)">① 脚本跑刀黑产打击</strong><br>
+                  构建脚本跑刀行为识别模型，覆盖云手机、模拟器等批量黑产账号，<strong style="color:#fbbf24">精确率 & 覆盖率均达 99%+</strong>，监控名单覆盖大盘百万量级异常账号，人均流水异常倍数达大盘 15x+。
+                  <br><br>
+                  <strong style="color:var(--accent)">② 撞车交易黑产打击</strong><br>
+                  针对游戏内撞车交易黑产行为，构建交易异常检测模型，结合图关系分析与行为序列建模，<strong style="color:#fbbf24">精确率 & 覆盖率均达 99%+</strong>，有效切断黑产洗钱链路。
+                  <br><br>
+                  <strong style="color:var(--secondary)">③ 多模态大模型对抗 & 人脸识别安全</strong><br>
+                  探索 LLM/VLM 在游戏安全对抗中的前沿应用；主导人脸识别安全研发，覆盖活体检测绕过对抗与深度伪造检测，保障实名认证体系有效性。
+                </div>
+                <div class="timeline-tags">
+                  <span class="tag tag-cyan">三角洲行动</span>
+                  <span class="tag tag-cyan">经济安全算法</span>
+                  <span class="tag tag-purple">脚本跑刀打击</span>
+                  <span class="tag tag-purple">撞车交易打击</span>
+                  <span class="tag tag-pink">黑产风险治理</span>
+                  <span class="tag tag-pink">多模态大模型</span>
+                  <span class="tag tag-green">人脸识别安全</span>
+                  <span class="tag tag-green">模型对抗</span>
+                </div>
+              </div>
+              <figure class="tencent-badge-card">
+                <img class="tencent-badge-img" src="assets/tencent-badge.gif" alt="已脱敏的腾讯工牌动图" loading="lazy">
+                <figcaption class="tencent-badge-caption">腾讯工牌纪念 · 已脱敏</figcaption>
+              </figure>
             </div>
           </div>
         </div>
