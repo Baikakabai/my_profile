@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>baikabai | 游戏安全 · NLP · 算法工程师</title>
+<title id="pageTitle">baikabai | 游戏安全 · NLP · 算法工程师</title>
 <style>
   :root {
     --primary: #e879f9;        /* 主色：亮粉紫 */
@@ -90,6 +90,49 @@
 
   .nav-links a:hover { color: var(--primary); }
   .nav-links a:hover::after { width: 100%; }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* 语言切换 */
+  .lang-switch {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px;
+    border: 1px solid rgba(232,121,249,0.25);
+    border-radius: 20px;
+    background: rgba(232,121,249,0.06);
+  }
+
+  .lang-switch button {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 5px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-family: inherit;
+  }
+
+  .lang-switch button:hover { color: var(--primary); }
+  .lang-switch button.active {
+    background: var(--primary);
+    color: #000;
+    box-shadow: var(--glow-cyan);
+  }
+
+  @media (max-width: 768px) {
+    .nav-right { gap: 10px; }
+    .lang-switch button { padding: 4px 9px; font-size: 0.7rem; }
+  }
 
   /* ===== 通用容器 ===== */
   .container {
@@ -1385,14 +1428,21 @@
 <!-- 导航 -->
 <nav>
   <div class="nav-logo">BAIKABAI.EXE</div>
-  <ul class="nav-links">
-    <li><a href="#about">关于</a></li>
-    <li><a href="#timeline">经历</a></li>
-    <li><a href="#skills">技能</a></li>
-    <li><a href="#projects">项目</a></li>
-    <li><a href="#tech-cloud">技术栈</a></li>
-    <li><a href="#contact" class="nav-contact">联系我</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about" data-i18n="nav-about">关于</a></li>
+      <li><a href="#timeline" data-i18n="nav-timeline">经历</a></li>
+      <li><a href="#skills" data-i18n="nav-skills">技能</a></li>
+      <li><a href="#projects" data-i18n="nav-projects">项目</a></li>
+      <li><a href="#tech-cloud" data-i18n="nav-tech">技术栈</a></li>
+      <li><a href="#contact" class="nav-contact" data-i18n="nav-contact">联系我</a></li>
+    </ul>
+    <div class="lang-switch" id="langSwitch">
+      <button data-lang="zh">中</button>
+      <button data-lang="en">EN</button>
+      <button data-lang="ja">日</button>
+    </div>
+  </div>
 </nav>
 
 <!-- Hero -->
@@ -1414,13 +1464,13 @@
       <span class="name-cn">Baikabai</span>
       <span class="name-en">GAME SECURITY ENGINEER</span>
     </h1>
-    <p class="hero-title">
+    <p class="hero-title" data-i18n="hero-title">
       <span>游戏安全</span> · <span>NLP / 内容安全</span> · <span>恶意对抗</span> · <span>算法策略工程师</span>
     </p>
     <div id="typewriter"></div>
     <div class="hero-cta">
-      <a href="#timeline" class="btn-primary">查看经历</a>
-      <a href="#skills" class="btn-outline">核心技能</a>
+      <a href="#timeline" class="btn-primary" data-i18n="hero-cta-view">查看经历</a>
+      <a href="#skills" class="btn-outline" data-i18n="hero-cta-skills">核心技能</a>
     </div>
   </div>
 
@@ -1435,7 +1485,7 @@
   <div class="section-wrap container">
     <div class="section-header">
       <div class="section-label">// ABOUT ME</div>
-      <h2 class="section-title">关于我</h2>
+      <h2 class="section-title" data-i18n="about-title">关于我</h2>
       <div class="section-line"></div>
     </div>
     <div class="about-grid">
@@ -1466,22 +1516,22 @@
         </div>
       </div>
       <div class="about-text">
-        <h3>游戏安全 · NLP · 黑产对抗专家 ✨</h3>
-        <p>精通 <strong>NLP 内容安全、机器学习对抗与游戏黑产治理</strong>，拥有从0到1构建多语言安全模型的完整经验。</p>
-        <p>曾就职于<strong>网易互娱</strong>，主导海外内容安全 NLP 模型体系建设，覆盖日/英/俄/西班牙语多语言辱骂与色情检测，准确率 99.99%+，效果超越竞品。</p>
-        <p>现就职于<strong>腾讯恶意对抗组</strong>，负责《三角洲行动》经济安全算法与策略体系，主导多模态大模型对抗、人脸识别安全等前沿方向研发。</p>
+        <h3 data-i18n="about-h3">游戏安全 · NLP · 黑产对抗专家 ✨</h3>
+        <p data-i18n="about-p1">精通 <strong>NLP 内容安全、机器学习对抗与游戏黑产治理</strong>，拥有从0到1构建多语言安全模型的完整经验。</p>
+        <p data-i18n="about-p2">曾就职于<strong>网易互娱</strong>，主导海外内容安全 NLP 模型体系建设，覆盖日/英/俄/西班牙语多语言辱骂与色情检测，准确率 99.99%+，效果超越竞品。</p>
+        <p data-i18n="about-p3">现就职于<strong>腾讯恶意对抗组</strong>，负责《三角洲行动》经济安全算法与策略体系，主导多模态大模型对抗、人脸识别安全等前沿方向研发。</p>
         <div class="about-stats">
           <div class="stat-item">
-            <span class="stat-num">5+</span>
-            <div class="stat-label">年算法经验</div>
+            <span class="stat-num" data-i18n="about-stat1">5+</span>
+            <div class="stat-label" data-i18n="about-stat1-label">年算法经验</div>
           </div>
           <div class="stat-item">
-            <span class="stat-num">4语</span>
-            <div class="stat-label">多语言模型</div>
+            <span class="stat-num" data-i18n="about-stat2">4语</span>
+            <div class="stat-label" data-i18n="about-stat2-label">多语言模型</div>
           </div>
           <div class="stat-item">
-            <span class="stat-num">99.99%</span>
-            <div class="stat-label">内容安全准确率</div>
+            <span class="stat-num" data-i18n="about-stat3">99.99%</span>
+            <div class="stat-label" data-i18n="about-stat3-label">内容安全准确率</div>
           </div>
         </div>
       </div>
@@ -1499,7 +1549,7 @@
     </div>
     <div class="section-header">
       <div class="section-label">// CAREER TIMELINE</div>
-      <h2 class="section-title">职业经历</h2>
+      <h2 class="section-title" data-i18n="timeline-title">职业经历</h2>
       <div class="section-line"></div>
     </div>
 
@@ -1514,19 +1564,19 @@
             <div class="card-header-content">
               <div class="card-header-left">
                 <div class="timeline-meta">
-                  <span class="timeline-date">2024.08 — 至今</span>
-                  <span class="timeline-company">腾讯科技</span>
-                  <span class="timeline-badge badge-current">● 在职</span>
+                  <span class="timeline-date" data-i18n="tencent-date">2024.08 — 至今</span>
+                  <span class="timeline-company" data-i18n="tencent-company">腾讯科技</span>
+                  <span class="timeline-badge badge-current" data-i18n="tencent-badge">● 在职</span>
                 </div>
-                <div class="timeline-role">算法策略工程师</div>
-                <div class="timeline-dept">游戏安全部 · 恶意对抗组</div>
+                <div class="timeline-role" data-i18n="tencent-role">算法策略工程师</div>
+                <div class="timeline-dept" data-i18n="tencent-dept">游戏安全部 · 恶意对抗组</div>
               </div>
             </div>
           </div>
           <div class="card-body-area">
             <div class="tencent-card-layout">
               <div class="tencent-card-main">
-                <div class="timeline-desc">
+                <div class="timeline-desc" data-i18n="tencent-desc">
                   负责《三角洲行动》经济安全体系建设，主导经济系统风险策略设计与落地。深度参与黑产对抗全链路，从数据挖掘、模型训练到策略上线形成闭环。
                   <br><br>
                   <strong style="color:var(--accent2)">① 脚本跑刀黑产打击</strong><br>
@@ -1539,14 +1589,14 @@
                   探索 LLM/VLM 在游戏安全对抗中的前沿应用；主导人脸识别安全研发，覆盖活体检测绕过对抗与深度伪造检测，保障实名认证体系有效性。
                 </div>
                 <div class="timeline-tags">
-                  <span class="tag tag-cyan">三角洲行动</span>
-                  <span class="tag tag-cyan">经济安全算法</span>
-                  <span class="tag tag-purple">脚本跑刀打击</span>
-                  <span class="tag tag-purple">撞车交易打击</span>
-                  <span class="tag tag-pink">黑产风险治理</span>
-                  <span class="tag tag-pink">多模态大模型</span>
-                  <span class="tag tag-green">人脸识别安全</span>
-                  <span class="tag tag-green">模型对抗</span>
+                  <span class="tag tag-cyan" data-i18n="tencent-tag1">三角洲行动</span>
+                  <span class="tag tag-cyan" data-i18n="tencent-tag2">经济安全算法</span>
+                  <span class="tag tag-purple" data-i18n="tencent-tag3">脚本跑刀打击</span>
+                  <span class="tag tag-purple" data-i18n="tencent-tag4">撞车交易打击</span>
+                  <span class="tag tag-pink" data-i18n="tencent-tag5">黑产风险治理</span>
+                  <span class="tag tag-pink" data-i18n="tencent-tag6">多模态大模型</span>
+                  <span class="tag tag-green" data-i18n="tencent-tag7">人脸识别安全</span>
+                  <span class="tag tag-green" data-i18n="tencent-tag8">模型对抗</span>
                 </div>
               </div>
               <figure class="tencent-badge-card">
@@ -1565,17 +1615,17 @@
             <div class="card-header-content">
               <div class="card-header-left">
                 <div class="timeline-meta">
-                  <span class="timeline-date">2023.04 — 2024.08</span>
-                  <span class="timeline-company">网易互动娱乐（正职）</span>
-                  <span class="timeline-badge badge-prev">已离职</span>
+                  <span class="timeline-date" data-i18n="netease-date">2023.04 — 2024.08</span>
+                  <span class="timeline-company" data-i18n="netease-company">网易互动娱乐（正职）</span>
+                  <span class="timeline-badge badge-prev" data-i18n="netease-badge">已离职</span>
                 </div>
-                <div class="timeline-role">NLP 算法工程师</div>
-                <div class="timeline-dept">海外内容安全模型方向</div>
+                <div class="timeline-role" data-i18n="netease-role">NLP 算法工程师</div>
+                <div class="timeline-dept" data-i18n="netease-dept">海外内容安全模型方向</div>
               </div>
             </div>
           </div>
           <div class="card-body-area">
-            <div class="timeline-desc">
+            <div class="timeline-desc" data-i18n="netease-desc">
               <strong style="color:var(--accent2)">① 多语言内容安全模型</strong><br>
               从0到1规划并部署《荒野行动》《第五人格》《黎明杀机》辱骂/色情模型（日/英/俄），及《Blood Strike》辱骂/色情模型（英/西班牙语/俄语）。准确率 <strong style="color:#fbbf24">99.99%+</strong>，精确率 80%+，F1-score 0.75+，日语/英语效果超越竞品。
               <br><br>
@@ -1592,14 +1642,14 @@
               针对《第五人格》演员行为与挂机行为研发专项识别模型，精确率 80%+。
             </div>
             <div class="timeline-tags">
-              <span class="tag tag-cyan">NLP</span>
-              <span class="tag tag-cyan">内容安全</span>
-              <span class="tag tag-purple">LLM / LoRA / SFT</span>
-              <span class="tag tag-purple">多语言模型</span>
-              <span class="tag tag-pink">未成年保护</span>
-              <span class="tag tag-green">Label Studio</span>
-              <span class="tag tag-green">自动处罚流程</span>
-              <span class="tag tag-pink">专利申请</span>
+              <span class="tag tag-cyan" data-i18n="netease-tag1">NLP</span>
+              <span class="tag tag-cyan" data-i18n="netease-tag2">内容安全</span>
+              <span class="tag tag-purple" data-i18n="netease-tag3">LLM / LoRA / SFT</span>
+              <span class="tag tag-purple" data-i18n="netease-tag4">多语言模型</span>
+              <span class="tag tag-pink" data-i18n="netease-tag5">未成年保护</span>
+              <span class="tag tag-green" data-i18n="netease-tag6">Label Studio</span>
+              <span class="tag tag-green" data-i18n="netease-tag7">自动处罚流程</span>
+              <span class="tag tag-pink" data-i18n="netease-tag8">专利申请</span>
             </div>
           </div>
         </div>
@@ -1613,23 +1663,23 @@
             <div class="card-header-content">
               <div class="card-header-left">
                 <div class="timeline-meta">
-                  <span class="timeline-date">2022.03 — 2023.03</span>
-                  <span class="timeline-company">大和証券グループ本社（日本）</span>
-                  <span class="timeline-badge badge-prev">研究实习</span>
+                  <span class="timeline-date" data-i18n="daiwa-date">2022.03 — 2023.03</span>
+                  <span class="timeline-company" data-i18n="daiwa-company">大和証券グループ本社（日本）</span>
+                  <span class="timeline-badge badge-prev" data-i18n="daiwa-badge">研究实习</span>
                 </div>
-                <div class="timeline-role">共同研究员</div>
-                <div class="timeline-dept">校内联合研究项目</div>
+                <div class="timeline-role" data-i18n="daiwa-role">共同研究员</div>
+                <div class="timeline-dept" data-i18n="daiwa-dept">校内联合研究项目</div>
               </div>
             </div>
           </div>
           <div class="card-body-area">
-            <div class="timeline-desc">
+            <div class="timeline-desc" data-i18n="daiwa-desc">
               在日本顶级证券公司参与校内联合研究项目，积累金融数据分析与量化研究经验，培养严谨学术研究能力与跨文化协作能力。
             </div>
             <div class="timeline-tags">
-              <span class="tag tag-cyan">数据分析</span>
-              <span class="tag tag-purple">量化研究</span>
-              <span class="tag tag-green">日本金融</span>
+              <span class="tag tag-cyan" data-i18n="daiwa-tag1">数据分析</span>
+              <span class="tag tag-purple" data-i18n="daiwa-tag2">量化研究</span>
+              <span class="tag tag-green" data-i18n="daiwa-tag3">日本金融</span>
             </div>
           </div>
         </div>
@@ -1643,26 +1693,26 @@
             <div class="card-header-content">
               <div class="card-header-left">
                 <div class="timeline-meta">
-                  <span class="timeline-date">2017.04 — 2023.03</span>
-                  <span class="timeline-company">茨城大学（日本）</span>
-                  <span class="timeline-badge badge-prev">本硕连读</span>
+                  <span class="timeline-date" data-i18n="ibaraki-date">2017.04 — 2023.03</span>
+                  <span class="timeline-company" data-i18n="ibaraki-company">茨城大学（日本）</span>
+                  <span class="timeline-badge badge-prev" data-i18n="ibaraki-badge">本硕连读</span>
                 </div>
-                <div class="timeline-role">知能系统 · 机械智能系统</div>
-                <div class="timeline-dept">本科：智能系统（2017—2021）&nbsp;·&nbsp; 硕士：机械智能系统（2021—2023）</div>
+                <div class="timeline-role" data-i18n="ibaraki-role">知能系统 · 机械智能系统</div>
+                <div class="timeline-dept" data-i18n="ibaraki-dept">本科：智能系统（2017—2021）&nbsp;·&nbsp; 硕士：机械智能系统（2021—2023）</div>
               </div>
             </div>
           </div>
           <div class="card-body-area">
-            <div class="timeline-desc">
+            <div class="timeline-desc" data-i18n="ibaraki-desc">
               🏆 <strong style="color:#fbbf24">全额学费减免</strong>（优秀学术奖励）<br><br>
               核心课程：数据分析、自然语言处理、人工智能、机器学习、强化学习、英文学术发表与写作、数据结构、计算机基本原理、高数
             </div>
             <div class="timeline-tags">
-              <span class="tag tag-cyan">NLP</span>
-              <span class="tag tag-cyan">机器学习</span>
-              <span class="tag tag-purple">强化学习</span>
-              <span class="tag tag-green">全额奖学金</span>
-              <span class="tag tag-pink">日本留学</span>
+              <span class="tag tag-cyan" data-i18n="ibaraki-tag1">NLP</span>
+              <span class="tag tag-cyan" data-i18n="ibaraki-tag2">机器学习</span>
+              <span class="tag tag-purple" data-i18n="ibaraki-tag3">强化学习</span>
+              <span class="tag tag-green" data-i18n="ibaraki-tag4">全额奖学金</span>
+              <span class="tag tag-pink" data-i18n="ibaraki-tag5">日本留学</span>
             </div>
           </div>
         </div>
@@ -1677,50 +1727,50 @@
   <div class="section-wrap container">
     <div class="section-header">
       <div class="section-label">// CORE SKILLS</div>
-      <h2 class="section-title">核心能力</h2>
+      <h2 class="section-title" data-i18n="skills-title">核心能力</h2>
       <div class="section-line"></div>
     </div>
 
     <div class="skills-grid">
       <div class="skill-card">
         <span class="skill-icon">🗣️</span>
-        <div class="skill-name">NLP · 多语言内容安全</div>
-        <div class="skill-desc">主导日/英/俄/西班牙语多语言辱骂与色情检测模型研发，准确率 99.99%+，F1-score 0.75+，日语/英语效果超越竞品，覆盖荒野行动、第五人格等多款海外产品。</div>
+        <div class="skill-name" data-i18n="skill1-name">NLP · 多语言内容安全</div>
+        <div class="skill-desc" data-i18n="skill1-desc">主导日/英/俄/西班牙语多语言辱骂与色情检测模型研发，准确率 99.99%+，F1-score 0.75+，日语/英语效果超越竞品，覆盖荒野行动、第五人格等多款海外产品。</div>
         <div class="skill-bar-wrap"><div class="skill-bar" data-width="97%"></div></div>
       </div>
 
       <div class="skill-card">
         <span class="skill-icon">🤖</span>
-        <div class="skill-name">LLM · LoRA · SFT 大模型微调</div>
-        <div class="skill-desc">利用 LLM + LoRA + SFT 前沿技术，结合少量数据完成7种分类精准判别；主导国内首个未成年性诱拐行为打击模型，精确率 96%+，已申请国内外专利。</div>
+        <div class="skill-name" data-i18n="skill2-name">LLM · LoRA · SFT 大模型微调</div>
+        <div class="skill-desc" data-i18n="skill2-desc">利用 LLM + LoRA + SFT 前沿技术，结合少量数据完成7种分类精准判别；主导国内首个未成年性诱拐行为打击模型，精确率 96%+，已申请国内外专利。</div>
         <div class="skill-bar-wrap"><div class="skill-bar" data-width="88%"></div></div>
       </div>
 
       <div class="skill-card">
         <span class="skill-icon">🎮</span>
-        <div class="skill-name">游戏经济安全 · 黑产对抗</div>
-        <div class="skill-desc">主导脚本跑刀 & 撞车交易双向黑产打击，<strong>精确率 & 覆盖率均达 99%+</strong>。脚本跑刀覆盖云手机/模拟器批量账号，人均流水异常 15x+；撞车交易结合图关系分析与行为序列建模，有效切断虚拟资产洗钱链路。</div>
+        <div class="skill-name" data-i18n="skill3-name">游戏经济安全 · 黑产对抗</div>
+        <div class="skill-desc" data-i18n="skill3-desc">主导脚本跑刀 & 撞车交易双向黑产打击，<strong>精确率 & 覆盖率均达 99%+</strong>。脚本跑刀覆盖云手机/模拟器批量账号，人均流水异常 15x+；撞车交易结合图关系分析与行为序列建模，有效切断虚拟资产洗钱链路。</div>
         <div class="skill-bar-wrap"><div class="skill-bar" data-width="99%"></div></div>
       </div>
 
       <div class="skill-card">
         <span class="skill-icon">🧠</span>
-        <div class="skill-name">多模态大模型对抗</div>
-        <div class="skill-desc">研究大模型在游戏安全领域的攻防应用，探索 LLM/VLM 对抗技术，构建基于大模型的智能安全分析与决策系统，持续推动游戏安全向 AI-Native 演进。</div>
+        <div class="skill-name" data-i18n="skill4-name">多模态大模型对抗</div>
+        <div class="skill-desc" data-i18n="skill4-desc">研究大模型在游戏安全领域的攻防应用，探索 LLM/VLM 对抗技术，构建基于大模型的智能安全分析与决策系统，持续推动游戏安全向 AI-Native 演进。</div>
         <div class="skill-bar-wrap"><div class="skill-bar" data-width="85%"></div></div>
       </div>
 
       <div class="skill-card">
         <span class="skill-icon">👁️</span>
-        <div class="skill-name">人脸识别安全</div>
-        <div class="skill-desc">深入研究人脸识别系统安全风险，包括活体检测对抗、深度伪造检测等，保障游戏实名认证体系安全可靠，守护未成年人保护机制有效性。</div>
+        <div class="skill-name" data-i18n="skill5-name">人脸识别安全</div>
+        <div class="skill-desc" data-i18n="skill5-desc">深入研究人脸识别系统安全风险，包括活体检测对抗、深度伪造检测等，保障游戏实名认证体系安全可靠，守护未成年人保护机制有效性。</div>
         <div class="skill-bar-wrap"><div class="skill-bar" data-width="82%"></div></div>
       </div>
 
       <div class="skill-card">
         <span class="skill-icon">📊</span>
-        <div class="skill-name">数据分析 · 标注体系建设</div>
-        <div class="skill-desc">从0到1构建标注团队标准化 SOP，基于 Label Studio 部署线上标注平台；精通 Python / PyTorch / sklearn / HuggingFace，熟悉 MySQL、Hadoop 大数据平台。</div>
+        <div class="skill-name" data-i18n="skill6-name">数据分析 · 标注体系建设</div>
+        <div class="skill-desc" data-i18n="skill6-desc">从0到1构建标注团队标准化 SOP，基于 Label Studio 部署线上标注平台；精通 Python / PyTorch / sklearn / HuggingFace，熟悉 MySQL、Hadoop 大数据平台。</div>
         <div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div>
       </div>
     </div>
@@ -1732,7 +1782,7 @@
   <div class="section-wrap container">
     <div class="section-header">
       <div class="section-label">// KEY PROJECTS</div>
-      <h2 class="section-title">重点项目</h2>
+      <h2 class="section-title" data-i18n="projects-title">重点项目</h2>
       <div class="section-line"></div>
     </div>
 
@@ -1740,49 +1790,49 @@
       <div class="project-card">
         <div class="project-num">01</div>
         <span class="project-icon">🌐</span>
-        <div class="project-title">海外多语言内容安全模型体系</div>
-        <div class="project-desc">从0到1规划并部署荒野行动、第五人格、黎明杀机、Blood Strike 等海外产品的辱骂/色情检测模型，覆盖日语、英语、俄语、西班牙语四种语言，准确率 99.99%+。</div>
-        <div class="project-highlight">🏆 日语/英语效果超越竞品，精确率 80%+，F1-score 0.75+</div>
+        <div class="project-title" data-i18n="project1-title">海外多语言内容安全模型体系</div>
+        <div class="project-desc" data-i18n="project1-desc">从0到1规划并部署荒野行动、第五人格、黎明杀机、Blood Strike 等海外产品的辱骂/色情检测模型，覆盖日语、英语、俄语、西班牙语四种语言，准确率 99.99%+。</div>
+        <div class="project-highlight" data-i18n="project1-hl">🏆 日语/英语效果超越竞品，精确率 80%+，F1-score 0.75+</div>
       </div>
 
       <div class="project-card">
         <div class="project-num">02</div>
         <span class="project-icon">🛡️</span>
-        <div class="project-title">未成年性诱拐行为打击模型（国内首创）</div>
-        <div class="project-desc">结合 LLM + LoRA + SFT 前沿技术，少量数据精准判别7种分类，组合异常玩家行为模型，高效识别对未成年人实施性诱拐的玩家，组合模型精确率 96%+。</div>
-        <div class="project-highlight">📜 已完成国内外专利申请 + 网易互娱创新奖申请</div>
+        <div class="project-title" data-i18n="project2-title">未成年性诱拐行为打击模型（国内首创）</div>
+        <div class="project-desc" data-i18n="project2-desc">结合 LLM + LoRA + SFT 前沿技术，少量数据精准判别7种分类，组合异常玩家行为模型，高效识别对未成年人实施性诱拐的玩家，组合模型精确率 96%+。</div>
+        <div class="project-highlight" data-i18n="project2-hl">📜 已完成国内外专利申请 + 网易互娱创新奖申请</div>
       </div>
 
       <div class="project-card">
         <div class="project-num">03</div>
         <span class="project-icon">⚔️</span>
-        <div class="project-title">《三角洲行动》脚本跑刀打击专项</div>
-        <div class="project-desc">基于行为序列分析与机器学习模型，构建脚本跑刀识别系统，实现对批量云手机、模拟器黑产账号的精准识别与实时打击。覆盖鸿蒙端、安卓端多终端类型，持续迭代对抗黑产进化。</div>
-        <div class="project-highlight">🎯 精确率 & 覆盖率 99%+，监控名单覆盖大盘百万量级，人均流水异常 15x+</div>
+        <div class="project-title" data-i18n="project3-title">《三角洲行动》脚本跑刀打击专项</div>
+        <div class="project-desc" data-i18n="project3-desc">基于行为序列分析与机器学习模型，构建脚本跑刀识别系统，实现对批量云手机、模拟器黑产账号的精准识别与实时打击。覆盖鸿蒙端、安卓端多终端类型，持续迭代对抗黑产进化。</div>
+        <div class="project-highlight" data-i18n="project3-hl">🎯 精确率 & 覆盖率 99%+，监控名单覆盖大盘百万量级，人均流水异常 15x+</div>
       </div>
 
       <div class="project-card">
         <div class="project-num">04</div>
         <span class="project-icon">💱</span>
-        <div class="project-title">《三角洲行动》撞车交易黑产打击</div>
-        <div class="project-desc">针对玩家间故意输赢转移虚拟资产的撞车交易黑产，构建交易异常检测模型。结合图关系网络分析（账号关联图谱）与行为序列建模，识别高频可疑交易对，有效切断黑产洗钱链路，保障游戏经济系统健康。</div>
-        <div class="project-highlight">💰 精确率 & 覆盖率 99%+，图关系 + 行为双模型联合打击</div>
+        <div class="project-title" data-i18n="project4-title">《三角洲行动》撞车交易黑产打击</div>
+        <div class="project-desc" data-i18n="project4-desc">针对玩家间故意输赢转移虚拟资产的撞车交易黑产，构建交易异常检测模型。结合图关系网络分析（账号关联图谱）与行为序列建模，识别高频可疑交易对，有效切断黑产洗钱链路，保障游戏经济系统健康。</div>
+        <div class="project-highlight" data-i18n="project4-hl">💰 精确率 & 覆盖率 99%+，图关系 + 行为双模型联合打击</div>
       </div>
 
       <div class="project-card">
         <div class="project-num">05</div>
         <span class="project-icon">🎭</span>
-        <div class="project-title">《第五人格》演员/挂机行为识别</div>
-        <div class="project-desc">针对第五人格游戏中演员行为（故意输游戏）与挂机行为，研发专项识别模型，具备高效精准的检测能力，有效识别相关违规行为，维护游戏公平环境。</div>
-        <div class="project-highlight">⚡ 精确率 80%+，有效打击演员挂机黑产</div>
+        <div class="project-title" data-i18n="project5-title">《第五人格》演员/挂机行为识别</div>
+        <div class="project-desc" data-i18n="project5-desc">针对第五人格游戏中演员行为（故意输游戏）与挂机行为，研发专项识别模型，具备高效精准的检测能力，有效识别相关违规行为，维护游戏公平环境。</div>
+        <div class="project-highlight" data-i18n="project5-hl">⚡ 精确率 80%+，有效打击演员挂机黑产</div>
       </div>
 
       <div class="project-card">
         <div class="project-num">06</div>
         <span class="project-icon">🏷️</span>
-        <div class="project-title">标注平台 & 审核体系建设</div>
-        <div class="project-desc">从0到1构建标注团队标准化 SOP，基于开源 Label Studio 部署线上标注平台，实现标注工作统一管理；优化审核系统 SOP，建立质检和复审环节，提升审核准确率。</div>
-        <div class="project-highlight">💡 团队管理 + 平台建设，从0到1的完整体系</div>
+        <div class="project-title" data-i18n="project6-title">标注平台 & 审核体系建设</div>
+        <div class="project-desc" data-i18n="project6-desc">从0到1构建标注团队标准化 SOP，基于开源 Label Studio 部署线上标注平台，实现标注工作统一管理；优化审核系统 SOP，建立质检和复审环节，提升审核准确率。</div>
+        <div class="project-highlight" data-i18n="project6-hl">💡 团队管理 + 平台建设，从0到1的完整体系</div>
       </div>
     </div>
   </div>
@@ -1793,39 +1843,39 @@
   <div class="container">
     <div class="section-header">
       <div class="section-label">// TECH STACK</div>
-      <h2 class="section-title">技术标签</h2>
+      <h2 class="section-title" data-i18n="tech-title">技术标签</h2>
       <div class="section-line"></div>
     </div>
     <div class="tag-cloud">
-      <span class="cloud-tag c1 size-lg">NLP</span>
-      <span class="cloud-tag c2 size-lg">机器学习</span>
-      <span class="cloud-tag c3 size-md">游戏安全</span>
-      <span class="cloud-tag c1 size-md">内容安全</span>
-      <span class="cloud-tag c4 size-lg">多语言模型</span>
-      <span class="cloud-tag c5 size-md">LLM</span>
-      <span class="cloud-tag c2 size-md">LoRA / SFT</span>
-      <span class="cloud-tag c1 size-sm">PyTorch</span>
-      <span class="cloud-tag c3 size-lg">黑产对抗</span>
-      <span class="cloud-tag c4 size-sm">HuggingFace</span>
-      <span class="cloud-tag c5 size-md">多模态大模型</span>
-      <span class="cloud-tag c1 size-md">经济安全算法</span>
-      <span class="cloud-tag c2 size-sm">文本分类</span>
-      <span class="cloud-tag c3 size-sm">人脸识别安全</span>
-      <span class="cloud-tag c4 size-md">脚本跑刀打击</span>
-      <span class="cloud-tag c5 size-md">撞车交易打击</span>
-      <span class="cloud-tag c1 size-sm">图关系分析</span>
-      <span class="cloud-tag c2 size-sm">Label Studio</span>
-      <span class="cloud-tag c1 size-sm">Python</span>
-      <span class="cloud-tag c2 size-md">行为序列分析</span>
-      <span class="cloud-tag c3 size-sm">爬虫技术</span>
-      <span class="cloud-tag c4 size-sm">MySQL / Hadoop</span>
-      <span class="cloud-tag c5 size-lg">三角洲行动</span>
-      <span class="cloud-tag c1 size-sm">sklearn</span>
-      <span class="cloud-tag c2 size-sm">VLM</span>
-      <span class="cloud-tag c3 size-md">未成年保护</span>
-      <span class="cloud-tag c4 size-sm">异常检测</span>
-      <span class="cloud-tag c5 size-sm">专利申请</span>
-      <span class="cloud-tag c1 size-md">日语 · 英语 · 俄语</span>
+      <span class="cloud-tag c1 size-lg" data-i18n="cloud-1">NLP</span>
+      <span class="cloud-tag c2 size-lg" data-i18n="cloud-2">机器学习</span>
+      <span class="cloud-tag c3 size-md" data-i18n="cloud-3">游戏安全</span>
+      <span class="cloud-tag c1 size-md" data-i18n="cloud-4">内容安全</span>
+      <span class="cloud-tag c4 size-lg" data-i18n="cloud-5">多语言模型</span>
+      <span class="cloud-tag c5 size-md" data-i18n="cloud-6">LLM</span>
+      <span class="cloud-tag c2 size-md" data-i18n="cloud-7">LoRA / SFT</span>
+      <span class="cloud-tag c1 size-sm" data-i18n="cloud-8">PyTorch</span>
+      <span class="cloud-tag c3 size-lg" data-i18n="cloud-9">黑产对抗</span>
+      <span class="cloud-tag c4 size-sm" data-i18n="cloud-10">HuggingFace</span>
+      <span class="cloud-tag c5 size-md" data-i18n="cloud-11">多模态大模型</span>
+      <span class="cloud-tag c1 size-md" data-i18n="cloud-12">经济安全算法</span>
+      <span class="cloud-tag c2 size-sm" data-i18n="cloud-13">文本分类</span>
+      <span class="cloud-tag c3 size-sm" data-i18n="cloud-14">人脸识别安全</span>
+      <span class="cloud-tag c4 size-md" data-i18n="cloud-15">脚本跑刀打击</span>
+      <span class="cloud-tag c5 size-md" data-i18n="cloud-16">撞车交易打击</span>
+      <span class="cloud-tag c1 size-sm" data-i18n="cloud-17">图关系分析</span>
+      <span class="cloud-tag c2 size-sm" data-i18n="cloud-18">Label Studio</span>
+      <span class="cloud-tag c1 size-sm" data-i18n="cloud-19">Python</span>
+      <span class="cloud-tag c2 size-md" data-i18n="cloud-20">行为序列分析</span>
+      <span class="cloud-tag c3 size-sm" data-i18n="cloud-21">爬虫技术</span>
+      <span class="cloud-tag c4 size-sm" data-i18n="cloud-22">MySQL / Hadoop</span>
+      <span class="cloud-tag c5 size-lg" data-i18n="cloud-23">三角洲行动</span>
+      <span class="cloud-tag c1 size-sm" data-i18n="cloud-24">sklearn</span>
+      <span class="cloud-tag c2 size-sm" data-i18n="cloud-25">VLM</span>
+      <span class="cloud-tag c3 size-md" data-i18n="cloud-26">未成年保护</span>
+      <span class="cloud-tag c4 size-sm" data-i18n="cloud-27">异常检测</span>
+      <span class="cloud-tag c5 size-sm" data-i18n="cloud-28">专利申请</span>
+      <span class="cloud-tag c1 size-md" data-i18n="cloud-29">日语 · 英语 · 俄语</span>
     </div>
   </div>
 </section>
@@ -1835,23 +1885,23 @@
   <div class="section-wrap container">
     <div class="section-header">
       <div class="section-label">// CONTACT ME</div>
-      <h2 class="section-title">联系我</h2>
+      <h2 class="section-title" data-i18n="contact-title">联系我</h2>
       <div class="section-line"></div>
     </div>
     <div class="contact-grid">
       <div class="contact-card">
         <div class="contact-icon">✉️</div>
-        <div class="contact-label">邮箱</div>
+        <div class="contact-label" data-i18n="contact-email-label">邮箱</div>
         <div class="contact-value"><a href="mailto:baika0906@163.com">baika0906@163.com</a></div>
       </div>
       <div class="contact-card">
         <div class="contact-icon">📺</div>
-        <div class="contact-label">哔哩哔哩</div>
+        <div class="contact-label" data-i18n="contact-bili-label">哔哩哔哩</div>
         <div class="contact-value"><a href="https://space.bilibili.com/1477613" target="_blank">Baka白卡</a></div>
       </div>
       <div class="contact-card">
         <div class="contact-icon">📕</div>
-        <div class="contact-label">小红书</div>
+        <div class="contact-label" data-i18n="contact-xhs-label">小红书</div>
         <div class="contact-value"><a href="https://www.xiaohongshu.com/user/profile/5965744166" target="_blank">N&amp;B</a></div>
       </div>
     </div>
@@ -1864,13 +1914,316 @@
     <div class="footer-name">Baikabai</div>
     <div class="footer-role">NLP · GAME SECURITY · ADVERSARIAL AI · ALGORITHM STRATEGY</div>
     <div class="footer-divider"></div>
-    <div class="footer-copy">
+    <div class="footer-copy" data-i18n="footer-copy">
       <span>网易互娱</span> 2023—2024 &nbsp;→&nbsp; <span>腾讯科技</span> 2024—PRESENT
     </div>
   </div>
 </footer>
 
 <script>
+// ===== i18n 多语言 =====
+const I18N = {
+  zh: {
+    title: 'baikabai | 游戏安全 · NLP · 算法工程师',
+    'nav-about': '关于', 'nav-timeline': '经历', 'nav-skills': '技能',
+    'nav-projects': '项目', 'nav-tech': '技术栈', 'nav-contact': '联系我',
+    'hero-title': '<span>游戏安全</span> · <span>NLP / 内容安全</span> · <span>恶意对抗</span> · <span>算法策略工程师</span>',
+    'hero-cta-view': '查看经历', 'hero-cta-skills': '核心技能',
+    'about-title': '关于我',
+    'about-h3': '游戏安全 · NLP · 黑产对抗专家 ✨',
+    'about-p1': '精通 <strong>NLP 内容安全、机器学习对抗与游戏黑产治理</strong>，拥有从0到1构建多语言安全模型的完整经验。',
+    'about-p2': '曾就职于<strong>网易互娱</strong>，主导海外内容安全 NLP 模型体系建设，覆盖日/英/俄/西班牙语多语言辱骂与色情检测，准确率 99.99%+，效果超越竞品。',
+    'about-p3': '现就职于<strong>腾讯恶意对抗组</strong>，负责《三角洲行动》经济安全算法与策略体系，主导多模态大模型对抗、人脸识别安全等前沿方向研发。',
+    'about-stat1': '5+', 'about-stat2': '4语', 'about-stat3': '99.99%',
+    'about-stat1-label': '年算法经验', 'about-stat2-label': '多语言模型', 'about-stat3-label': '内容安全准确率',
+    'timeline-title': '职业经历',
+    'tencent-date': '2024.08 — 至今', 'tencent-company': '腾讯科技', 'tencent-badge': '● 在职',
+    'tencent-role': '算法策略工程师', 'tencent-dept': '游戏安全部 · 恶意对抗组',
+    'tencent-desc': '负责《三角洲行动》经济安全体系建设，主导经济系统风险策略设计与落地。深度参与黑产对抗全链路，从数据挖掘、模型训练到策略上线形成闭环。<br><br><strong style="color:var(--accent2)">① 脚本跑刀黑产打击</strong><br>构建脚本跑刀行为识别模型，覆盖云手机、模拟器等批量黑产账号，<strong style="color:#fbbf24">精确率 & 覆盖率均达 99%+</strong>，监控名单覆盖大盘百万量级异常账号，人均流水异常倍数达大盘 15x+。<br><br><strong style="color:var(--accent)">② 撞车交易黑产打击</strong><br>针对游戏内撞车交易黑产行为，构建交易异常检测模型，结合图关系分析与行为序列建模，<strong style="color:#fbbf24">精确率 & 覆盖率均达 99%+</strong>，有效切断黑产洗钱链路。<br><br><strong style="color:var(--secondary)">③ 多模态大模型对抗 & 人脸识别安全</strong><br>探索 LLM/VLM 在游戏安全对抗中的前沿应用；主导人脸识别安全研发，覆盖活体检测绕过对抗与深度伪造检测，保障实名认证体系有效性。',
+    'tencent-tag1': '三角洲行动', 'tencent-tag2': '经济安全算法', 'tencent-tag3': '脚本跑刀打击',
+    'tencent-tag4': '撞车交易打击', 'tencent-tag5': '黑产风险治理', 'tencent-tag6': '多模态大模型',
+    'tencent-tag7': '人脸识别安全', 'tencent-tag8': '模型对抗',
+    'netease-date': '2023.04 — 2024.08', 'netease-company': '网易互动娱乐（正职）', 'netease-badge': '已离职',
+    'netease-role': 'NLP 算法工程师', 'netease-dept': '海外内容安全模型方向',
+    'netease-desc': '<strong style="color:var(--accent2)">① 多语言内容安全模型</strong><br>从0到1规划并部署《荒野行动》《第五人格》《黎明杀机》辱骂/色情模型（日/英/俄），及《Blood Strike》辱骂/色情模型（英/西班牙语/俄语）。准确率 <strong style="color:#fbbf24">99.99%+</strong>，精确率 80%+，F1-score 0.75+，日语/英语效果超越竞品。<br><br><strong style="color:var(--accent)">② 未成年性诱拐打击模型（国内首创）</strong><br>结合 LLM + LoRA + SFT 前沿技术，少量数据精准判别7种分类，组合行为模型，精确率 <strong style="color:#fbbf24">96%+</strong>。已完成国内外专利申请及网易互娱创新奖申请。<br><br><strong style="color:var(--secondary)">③ 账号欺诈 & 金钱诈骗打击</strong><br>欺诈内容检测模型精确率 <strong style="color:#fbbf24">99%+</strong>，实现自动处罚流程，极大节省人力成本，有效避免误伤。<br><br><strong style="color:#34d399">④ 标注 & 审核团队管理</strong><br>从0到1构建标注团队标准化 SOP，基于开源 Label Studio 部署线上标注平台；建立质检和复审环节，有效提升审核准确率。<br><br><strong style="color:#fbbf24">⑤ 演员/挂机行为识别模型</strong><br>针对《第五人格》演员行为与挂机行为研发专项识别模型，精确率 80%+。',
+    'netease-tag1': 'NLP', 'netease-tag2': '内容安全', 'netease-tag3': 'LLM / LoRA / SFT',
+    'netease-tag4': '多语言模型', 'netease-tag5': '未成年保护', 'netease-tag6': 'Label Studio',
+    'netease-tag7': '自动处罚流程', 'netease-tag8': '专利申请',
+    'daiwa-date': '2022.03 — 2023.03', 'daiwa-company': '大和証券グループ本社（日本）', 'daiwa-badge': '研究实习',
+    'daiwa-role': '共同研究员', 'daiwa-dept': '校内联合研究项目',
+    'daiwa-desc': '在日本顶级证券公司参与校内联合研究项目，积累金融数据分析与量化研究经验，培养严谨学术研究能力与跨文化协作能力。',
+    'daiwa-tag1': '数据分析', 'daiwa-tag2': '量化研究', 'daiwa-tag3': '日本金融',
+    'ibaraki-date': '2017.04 — 2023.03', 'ibaraki-company': '茨城大学（日本）', 'ibaraki-badge': '本硕连读',
+    'ibaraki-role': '知能系统 · 机械智能系统', 'ibaraki-dept': '本科：智能系统（2017—2021）&nbsp;·&nbsp; 硕士：机械智能系统（2021—2023）',
+    'ibaraki-desc': '🏆 <strong style="color:#fbbf24">全额学费减免</strong>（优秀学术奖励）<br><br>核心课程：数据分析、自然语言处理、人工智能、机器学习、强化学习、英文学术发表与写作、数据结构、计算机基本原理、高数',
+    'ibaraki-tag1': 'NLP', 'ibaraki-tag2': '机器学习', 'ibaraki-tag3': '强化学习',
+    'ibaraki-tag4': '全额奖学金', 'ibaraki-tag5': '日本留学',
+    'skills-title': '核心能力',
+    'skill1-name': 'NLP · 多语言内容安全',
+    'skill1-desc': '主导日/英/俄/西班牙语多语言辱骂与色情检测模型研发，准确率 99.99%+，F1-score 0.75+，日语/英语效果超越竞品，覆盖荒野行动、第五人格等多款海外产品。',
+    'skill2-name': 'LLM · LoRA · SFT 大模型微调',
+    'skill2-desc': '利用 LLM + LoRA + SFT 前沿技术，结合少量数据完成7种分类精准判别；主导国内首个未成年性诱拐行为打击模型，精确率 96%+，已申请国内外专利。',
+    'skill3-name': '游戏经济安全 · 黑产对抗',
+    'skill3-desc': '主导脚本跑刀 & 撞车交易双向黑产打击，<strong>精确率 & 覆盖率均达 99%+</strong>。脚本跑刀覆盖云手机/模拟器批量账号，人均流水异常 15x+；撞车交易结合图关系分析与行为序列建模，有效切断虚拟资产洗钱链路。',
+    'skill4-name': '多模态大模型对抗',
+    'skill4-desc': '研究大模型在游戏安全领域的攻防应用，探索 LLM/VLM 对抗技术，构建基于大模型的智能安全分析与决策系统，持续推动游戏安全向 AI-Native 演进。',
+    'skill5-name': '人脸识别安全',
+    'skill5-desc': '深入研究人脸识别系统安全风险，包括活体检测对抗、深度伪造检测等，保障游戏实名认证体系安全可靠，守护未成年人保护机制有效性。',
+    'skill6-name': '数据分析 · 标注体系建设',
+    'skill6-desc': '从0到1构建标注团队标准化 SOP，基于 Label Studio 部署线上标注平台；精通 Python / PyTorch / sklearn / HuggingFace，熟悉 MySQL、Hadoop 大数据平台。',
+    'projects-title': '重点项目',
+    'project1-title': '海外多语言内容安全模型体系',
+    'project1-desc': '从0到1规划并部署荒野行动、第五人格、黎明杀机、Blood Strike 等海外产品的辱骂/色情检测模型，覆盖日语、英语、俄语、西班牙语四种语言，准确率 99.99%+。',
+    'project1-hl': '🏆 日语/英语效果超越竞品，精确率 80%+，F1-score 0.75+',
+    'project2-title': '未成年性诱拐行为打击模型（国内首创）',
+    'project2-desc': '结合 LLM + LoRA + SFT 前沿技术，少量数据精准判别7种分类，组合异常玩家行为模型，高效识别对未成年人实施性诱拐的玩家，组合模型精确率 96%+。',
+    'project2-hl': '📜 已完成国内外专利申请 + 网易互娱创新奖申请',
+    'project3-title': '《三角洲行动》脚本跑刀打击专项',
+    'project3-desc': '基于行为序列分析与机器学习模型，构建脚本跑刀识别系统，实现对批量云手机、模拟器黑产账号的精准识别与实时打击。覆盖鸿蒙端、安卓端多终端类型，持续迭代对抗黑产进化。',
+    'project3-hl': '🎯 精确率 & 覆盖率 99%+，监控名单覆盖大盘百万量级，人均流水异常 15x+',
+    'project4-title': '《三角洲行动》撞车交易黑产打击',
+    'project4-desc': '针对玩家间故意输赢转移虚拟资产的撞车交易黑产，构建交易异常检测模型。结合图关系网络分析（账号关联图谱）与行为序列建模，识别高频可疑交易对，有效切断黑产洗钱链路，保障游戏经济系统健康。',
+    'project4-hl': '💰 精确率 & 覆盖率 99%+，图关系 + 行为双模型联合打击',
+    'project5-title': '《第五人格》演员/挂机行为识别',
+    'project5-desc': '针对第五人格游戏中演员行为（故意输游戏）与挂机行为，研发专项识别模型，具备高效精准的检测能力，有效识别相关违规行为，维护游戏公平环境。',
+    'project5-hl': '⚡ 精确率 80%+，有效打击演员挂机黑产',
+    'project6-title': '标注平台 & 审核体系建设',
+    'project6-desc': '从0到1构建标注团队标准化 SOP，基于开源 Label Studio 部署线上标注平台，实现标注工作统一管理；优化审核系统 SOP，建立质检和复审环节，提升审核准确率。',
+    'project6-hl': '💡 团队管理 + 平台建设，从0到1的完整体系',
+    'tech-title': '技术标签',
+    'cloud-1': 'NLP', 'cloud-2': '机器学习', 'cloud-3': '游戏安全', 'cloud-4': '内容安全',
+    'cloud-5': '多语言模型', 'cloud-6': 'LLM', 'cloud-7': 'LoRA / SFT', 'cloud-8': 'PyTorch',
+    'cloud-9': '黑产对抗', 'cloud-10': 'HuggingFace', 'cloud-11': '多模态大模型', 'cloud-12': '经济安全算法',
+    'cloud-13': '文本分类', 'cloud-14': '人脸识别安全', 'cloud-15': '脚本跑刀打击', 'cloud-16': '撞车交易打击',
+    'cloud-17': '图关系分析', 'cloud-18': 'Label Studio', 'cloud-19': 'Python', 'cloud-20': '行为序列分析',
+    'cloud-21': '爬虫技术', 'cloud-22': 'MySQL / Hadoop', 'cloud-23': '三角洲行动', 'cloud-24': 'sklearn',
+    'cloud-25': 'VLM', 'cloud-26': '未成年保护', 'cloud-27': '异常检测', 'cloud-28': '专利申请',
+    'cloud-29': '日语 · 英语 · 俄语',
+    'contact-title': '联系我', 'contact-email-label': '邮箱', 'contact-bili-label': '哔哩哔哩', 'contact-xhs-label': '小红书',
+    'footer-copy': '<span>网易互娱</span> 2023—2024 &nbsp;→&nbsp; <span>腾讯科技</span> 2024—PRESENT'
+  },
+  en: {
+    title: 'baikabai | Game Security · NLP · Algorithm Engineer',
+    'nav-about': 'About', 'nav-timeline': 'Experience', 'nav-skills': 'Skills',
+    'nav-projects': 'Projects', 'nav-tech': 'Tech Stack', 'nav-contact': 'Contact',
+    'hero-title': '<span>Game Security</span> · <span>NLP / Content Safety</span> · <span>Anti-Cheat</span> · <span>Algorithm Strategy Engineer</span>',
+    'hero-cta-view': 'View Experience', 'hero-cta-skills': 'Core Skills',
+    'about-title': 'About Me',
+    'about-h3': 'Game Security · NLP · Anti-Cheat Expert ✨',
+    'about-p1': 'Proficient in <strong>NLP content safety, adversarial machine learning, and game anti-cheat governance</strong>, with end-to-end experience building multilingual safety models from scratch.',
+    'about-p2': 'Formerly at <strong>NetEase Games</strong>, leading the overseas content-safety NLP model system covering Japanese/English/Russian/Spanish abuse &amp; pornography detection with 99.99%+ accuracy, outperforming competitors.',
+    'about-p3': 'Currently at the <strong>Tencent Anti-Cheat team</strong>, responsible for the economic-security algorithm &amp; strategy system of "Delta Force", leading cutting-edge R&amp;D in multimodal LLM defense and face-recognition security.',
+    'about-stat1': '5+', 'about-stat2': '4', 'about-stat3': '99.99%',
+    'about-stat1-label': 'Years of Algo', 'about-stat2-label': 'Multilingual Models', 'about-stat3-label': 'Content Safety Accuracy',
+    'timeline-title': 'Career',
+    'tencent-date': '2024.08 — Present', 'tencent-company': 'Tencent', 'tencent-badge': '● Current',
+    'tencent-role': 'Algorithm Strategy Engineer', 'tencent-dept': 'Game Security · Anti-Cheat Team',
+    'tencent-desc': 'Responsible for the economic-security system of "Delta Force", leading risk-strategy design and implementation. Deeply involved in the full anti-cheat loop — from data mining and model training to strategy rollout.<br><br><strong style="color:var(--accent2)">① Scripted run-knife cheating</strong><br>Built a scripted run-knife detection model covering mass bot accounts on cloud phones and emulators, achieving <strong style="color:#fbbf24">99%+ precision &amp; coverage</strong>. The watchlist spans millions of abnormal accounts with per-user revenue anomalies at 15x+ the platform average.<br><br><strong style="color:var(--accent)">② Trade-collusion cheating</strong><br>Built a transaction-anomaly detection model against in-game trade collusion, combining graph-relation analysis and behavior-sequence modeling, with <strong style="color:#fbbf24">99%+ precision &amp; coverage</strong> to effectively cut off money-laundering chains.<br><br><strong style="color:var(--secondary)">③ Multimodal LLM defense &amp; face-recognition security</strong><br>Exploring cutting-edge LLM/VLM applications in game-security defense; leading face-recognition security R&amp;D covering liveness-detection bypass and deepfake detection to safeguard the real-name verification system.',
+    'tencent-tag1': 'Delta Force', 'tencent-tag2': 'Economic Security Algo', 'tencent-tag3': 'Run-knife Cheating',
+    'tencent-tag4': 'Trade Collusion', 'tencent-tag5': 'Cheating Risk Control', 'tencent-tag6': 'Multimodal LLM',
+    'tencent-tag7': 'Face Security', 'tencent-tag8': 'Model Adversarial',
+    'netease-date': '2023.04 — 2024.08', 'netease-company': 'NetEase Games (Full-time)', 'netease-badge': 'Former',
+    'netease-role': 'NLP Algorithm Engineer', 'netease-dept': 'Overseas Content-Safety Models',
+    'netease-desc': '<strong style="color:var(--accent2)">① Multilingual content-safety models</strong><br>Planned and deployed from scratch abuse/pornography models for Knives Out, Identity V and Dead by Daylight (JA/EN/RU), plus Blood Strike (EN/ES/RU). Accuracy <strong style="color:#fbbf24">99.99%+</strong>, precision 80%+, F1-score 0.75+, with JA/EN outperforming competitors.<br><br><strong style="color:var(--accent)">② Child-grooming detection model (first in China)</strong><br>Combined LLM + LoRA + SFT to precisely classify 7 categories from limited data, composing behavior models at <strong style="color:#fbbf24">96%+</strong> precision. Domestic &amp; international patents filed, plus a NetEase Innovation Award submission.<br><br><strong style="color:var(--secondary)">③ Account fraud &amp; financial scam detection</strong><br>Fraud-content detection at <strong style="color:#fbbf24">99%+</strong> precision with an automated penalty flow, greatly cutting labor cost while avoiding false positives.<br><br><strong style="color:#34d399">④ Annotation &amp; review team management</strong><br>Built standardized annotation SOPs from scratch and deployed a Label Studio platform; established QA and re-review to lift review accuracy.<br><br><strong style="color:#fbbf24">⑤ Griefing/AFK detection models</strong><br>Built a dedicated model for intentional-throwing and AFK behavior in Identity V at 80%+ precision.',
+    'netease-tag1': 'NLP', 'netease-tag2': 'Content Safety', 'netease-tag3': 'LLM / LoRA / SFT',
+    'netease-tag4': 'Multilingual Models', 'netease-tag5': 'Child Protection', 'netease-tag6': 'Label Studio',
+    'netease-tag7': 'Auto Penalty', 'netease-tag8': 'Patents',
+    'daiwa-date': '2022.03 — 2023.03', 'daiwa-company': 'Daiwa Securities Group (Japan)', 'daiwa-badge': 'Research Intern',
+    'daiwa-role': 'Research Fellow', 'daiwa-dept': 'Joint University Research',
+    'daiwa-desc': 'Joined a joint university research project at a top Japanese securities firm, gaining experience in financial data analysis and quantitative research, and honing rigorous academic and cross-cultural collaboration skills.',
+    'daiwa-tag1': 'Data Analysis', 'daiwa-tag2': 'Quant Research', 'daiwa-tag3': 'Japanese Finance',
+    'ibaraki-date': '2017.04 — 2023.03', 'ibaraki-company': 'Ibaraki University (Japan)', 'ibaraki-badge': 'BSc + MSc',
+    'ibaraki-role': 'Intelligent Systems · Mechanical Intelligence', 'ibaraki-dept': 'BSc: Intelligent Systems (2017—2021)&nbsp;·&nbsp; MSc: Mechanical Intelligent Systems (2021—2023)',
+    'ibaraki-desc': '🏆 <strong style="color:#fbbf24">Full tuition waiver</strong> (academic excellence)<br><br>Core courses: Data Analysis, NLP, AI, Machine Learning, Reinforcement Learning, Academic Writing, Data Structures, Computer Fundamentals, Advanced Mathematics',
+    'ibaraki-tag1': 'NLP', 'ibaraki-tag2': 'Machine Learning', 'ibaraki-tag3': 'Reinforcement Learning',
+    'ibaraki-tag4': 'Full Scholarship', 'ibaraki-tag5': 'Study in Japan',
+    'skills-title': 'Core Skills',
+    'skill1-name': 'NLP · Multilingual Content Safety',
+    'skill1-desc': 'Led multilingual (JA/EN/RU/ES) abuse &amp; pornography detection with 99.99%+ accuracy, F1-score 0.75+, outperforming competitors on JA/EN, deployed across Knives Out, Identity V and more.',
+    'skill2-name': 'LLM · LoRA · SFT Fine-tuning',
+    'skill2-desc': 'Applied LLM + LoRA + SFT to precisely classify 7 categories from limited data; led China\'s first child-grooming detection model at 96%+ precision, with domestic &amp; international patents filed.',
+    'skill3-name': 'Game Economy Security · Anti-Cheat',
+    'skill3-desc': 'Led both scripted run-knife and trade-collusion anti-cheat with <strong>99%+ precision &amp; coverage</strong>. Run-knife covers cloud-phone/emulator bot farms with 15x+ revenue anomalies; trade-collusion combines graph analysis and behavior modeling to cut off money laundering.',
+    'skill4-name': 'Multimodal LLM Defense',
+    'skill4-desc': 'Researching LLM/VLM attack-defense in game security, building LLM-based intelligent security analysis and decision systems, driving game security toward AI-Native.',
+    'skill5-name': 'Face-Recognition Security',
+    'skill5-desc': 'Deep research into face-recognition security risks including liveness-detection bypass and deepfake detection, safeguarding real-name verification and child-protection mechanisms.',
+    'skill6-name': 'Data Analysis · Annotation Infrastructure',
+    'skill6-desc': 'Built annotation SOPs from scratch and deployed a Label Studio platform; proficient in Python / PyTorch / sklearn / HuggingFace, familiar with MySQL and Hadoop big-data platforms.',
+    'projects-title': 'Key Projects',
+    'project1-title': 'Overseas Multilingual Content-Safety System',
+    'project1-desc': 'Planned and deployed from scratch abuse/pornography detection for Knives Out, Identity V, Dead by Daylight and Blood Strike, covering JA/EN/RU/ES with 99.99%+ accuracy.',
+    'project1-hl': '🏆 JA/EN outperform competitors, precision 80%+, F1-score 0.75+',
+    'project2-title': 'Child-Grooming Detection Model (First in China)',
+    'project2-desc': 'Combining LLM + LoRA + SFT to classify 7 categories from limited data, composing abnormal-player behavior models to precisely identify grooming at 96%+ precision.',
+    'project2-hl': '📜 Domestic &amp; international patents filed + NetEase Innovation Award submission',
+    'project3-title': 'Delta Force · Run-knife Anti-Cheat',
+    'project3-desc': 'Built a scripted run-knife detection system via behavior-sequence analysis and ML, precisely identifying and punishing mass cloud-phone/emulator bot accounts in real time, across HarmonyOS and Android.',
+    'project3-hl': '🎯 99%+ precision &amp; coverage, millions of accounts watched, 15x+ revenue anomalies',
+    'project4-title': 'Delta Force · Trade-Collusion Anti-Cheat',
+    'project4-desc': 'Built a transaction-anomaly model against players who deliberately win/lose to transfer virtual assets, combining graph-relation networks and behavior modeling to cut off money laundering and protect the economy.',
+    'project4-hl': '💰 99%+ precision &amp; coverage, graph + behavior dual-model defense',
+    'project5-title': 'Identity V · Griefing/AFK Detection',
+    'project5-desc': 'Built a dedicated model for intentional-throwing and AFK behavior in Identity V, with highly precise detection to maintain a fair gaming environment.',
+    'project5-hl': '⚡ 80%+ precision, effectively curbing griefing/AFK cheating',
+    'project6-title': 'Annotation Platform &amp; Review Infrastructure',
+    'project6-desc': 'Built annotation SOPs from scratch and deployed a Label Studio platform for unified management; optimized review SOPs with QA and re-review to lift accuracy.',
+    'project6-hl': '💡 Team management + platform, a complete from-scratch system',
+    'tech-title': 'Tech Stack',
+    'cloud-1': 'NLP', 'cloud-2': 'Machine Learning', 'cloud-3': 'Game Security', 'cloud-4': 'Content Safety',
+    'cloud-5': 'Multilingual Models', 'cloud-6': 'LLM', 'cloud-7': 'LoRA / SFT', 'cloud-8': 'PyTorch',
+    'cloud-9': 'Anti-Cheat', 'cloud-10': 'HuggingFace', 'cloud-11': 'Multimodal LLM', 'cloud-12': 'Economic Security Algo',
+    'cloud-13': 'Text Classification', 'cloud-14': 'Face Security', 'cloud-15': 'Run-knife Cheating', 'cloud-16': 'Trade Collusion',
+    'cloud-17': 'Graph Analysis', 'cloud-18': 'Label Studio', 'cloud-19': 'Python', 'cloud-20': 'Behavior Modeling',
+    'cloud-21': 'Web Scraping', 'cloud-22': 'MySQL / Hadoop', 'cloud-23': 'Delta Force', 'cloud-24': 'sklearn',
+    'cloud-25': 'VLM', 'cloud-26': 'Child Protection', 'cloud-27': 'Anomaly Detection', 'cloud-28': 'Patents',
+    'cloud-29': 'JA · EN · RU',
+    'contact-title': 'Contact', 'contact-email-label': 'Email', 'contact-bili-label': 'Bilibili', 'contact-xhs-label': 'Xiaohongshu',
+    'footer-copy': '<span>NetEase Games</span> 2023—2024 &nbsp;→&nbsp; <span>Tencent</span> 2024—PRESENT'
+  },
+  ja: {
+    title: 'baikabai | ゲームセキュリティ · NLP · アルゴリズムエンジニア',
+    'nav-about': 'プロフィール', 'nav-timeline': '経歴', 'nav-skills': 'スキル',
+    'nav-projects': 'プロジェクト', 'nav-tech': '技術スタック', 'nav-contact': 'お問い合わせ',
+    'hero-title': '<span>ゲームセキュリティ</span> · <span>NLP / コンテンツ安全</span> · <span>不正対策</span> · <span>アルゴリズム戦略エンジニア</span>',
+    'hero-cta-view': '経歴を見る', 'hero-cta-skills': 'コアスキル',
+    'about-title': '自己紹介',
+    'about-h3': 'ゲームセキュリティ · NLP · 不正対策のエキスパート ✨',
+    'about-p1': '<strong>NLPコンテンツ安全・敵対的機械学習・ゲーム不正対策</strong>に精通し、多言語セーフティモデルをゼロから構築した一貫した経験を持つ。',
+    'about-p2': '<strong>NetEase Games（網易）</strong>にて海外コンテンツ安全NLPモデル体系の構築を主導。日・英・露・スペイン語の暴言・ポルノ検出をカバーし、精度99.99%以上、競合を上回る効果を実現。',
+    'about-p3': '現在は<strong>Tencent（騰訊）の不正対策チーム</strong>に所属し、『Delta Force』の経済安全アルゴリズム・戦略体系を担当。マルチモーダル大規模モデル対策や顔認証セキュリティなど最先端の研究開発を主導。',
+    'about-stat1': '5+', 'about-stat2': '4言語', 'about-stat3': '99.99%',
+    'about-stat1-label': 'アルゴリズム経験', 'about-stat2-label': '多言語モデル', 'about-stat3-label': 'コンテンツ安全精度',
+    'timeline-title': '職務経歴',
+    'tencent-date': '2024.08 — 現在', 'tencent-company': 'Tencent（騰訊）', 'tencent-badge': '● 現職',
+    'tencent-role': 'アルゴリズム戦略エンジニア', 'tencent-dept': 'ゲームセキュリティ部・不正対策チーム',
+    'tencent-desc': '『Delta Force』の経済安全体系の構築を担当し、経済システムのリスク戦略設計と実装を主導。データマイニングからモデル学習、戦略リリースまで不正対策の全工程に深く関与。<br><br><strong style="color:var(--accent2)">① スクリプト自動周回（跑刀）の不正対策</strong><br>クラウドフォンやエミュレータなどの大量BOTアカウントを対象にスクリプト周回検出モデルを構築し、<strong style="color:#fbbf24">適合率・カバレッジともに99%以上</strong>。監視リストは数百万規模の異常アカウントをカバーし、一人あたりの売上異常は全体平均の15倍以上。<br><br><strong style="color:var(--accent)">② 馴れ合い取引の不正対策</strong><br>ゲーム内の馴れ合い取引（八百長）による不正に、取引異常検出モデルを構築。グラフ関係分析と行動系列モデリングを組み合わせ、<strong style="color:#fbbf24">適合率・カバレッジともに99%以上</strong>でマネーロンダリング経路を遮断。<br><br><strong style="color:var(--secondary)">③ マルチモーダルLLM対策 &amp; 顔認証セキュリティ</strong><br>ゲームセキュリティにおけるLLM/VLMの最先端応用を探索。顔認証セキュリティの研究開発を主導し、生体検知回避対策やディープフェイク検出をカバーして実名認証体系の有効性を担保。',
+    'tencent-tag1': 'Delta Force', 'tencent-tag2': '経済安全アルゴリズム', 'tencent-tag3': 'スクリプト周回対策',
+    'tencent-tag4': '馴れ合い取引対策', 'tencent-tag5': '不正リスク管理', 'tencent-tag6': 'マルチモーダルLLM',
+    'tencent-tag7': '顔認証セキュリティ', 'tencent-tag8': 'モデル対抗',
+    'netease-date': '2023.04 — 2024.08', 'netease-company': 'NetEase Games（正社員）', 'netease-badge': '退職',
+    'netease-role': 'NLPアルゴリズムエンジニア', 'netease-dept': '海外コンテンツ安全モデル',
+    'netease-desc': '<strong style="color:var(--accent2)">① 多言語コンテンツ安全モデル</strong><br>『荒野行動』『第五人格』『Dead by Daylight』の暴言・ポルノモデル（日/英/露）、『Blood Strike』の暴言・ポルノモデル（英/スペイン語/露）をゼロから設計・導入。精度 <strong style="color:#fbbf24">99.99%以上</strong>、適合率80%以上、F1スコア0.75以上、日・英は競合を上回る。<br><br><strong style="color:var(--accent)">② 未成年グルーミング対策モデル（国内初）</strong><br>LLM + LoRA + SFTの先端技術を組み合わせ、少量データで7分類を高精度に判別。行動モデルを組み合わせ、適合率 <strong style="color:#fbbf24">96%以上</strong>。国内外の特許出願および網易イノベーション賞へ申請済み。<br><br><strong style="color:var(--secondary)">③ アカウント詐欺・金銭詐欺対策</strong><br>詐欺コンテンツ検出モデルの適合率 <strong style="color:#fbbf24">99%以上</strong>。自動処罰フローを実現し、人件費を大幅削減しつつ誤検知を回避。<br><br><strong style="color:#34d399">④ アノテーション・審査チーム管理</strong><br>アノテーションチームの標準SOPをゼロから構築し、オープンソースのLabel Studioでオンラインアノテーション基盤を導入。品質管理と再審査体制を確立し審査精度を向上。<br><br><strong style="color:#fbbf24">⑤ 荒らし・放置行為検出モデル</strong><br>『第五人格』の荒らし（故意の敗北）行為と放置行為を対象に専用検出モデルを開発、適合率80%以上。',
+    'netease-tag1': 'NLP', 'netease-tag2': 'コンテンツ安全', 'netease-tag3': 'LLM / LoRA / SFT',
+    'netease-tag4': '多言語モデル', 'netease-tag5': '未成年保護', 'netease-tag6': 'Label Studio',
+    'netease-tag7': '自動処罰フロー', 'netease-tag8': '特許出願',
+    'daiwa-date': '2022.03 — 2023.03', 'daiwa-company': '大和証券グループ本社（日本）', 'daiwa-badge': '研究インターン',
+    'daiwa-role': '共同研究員', 'daiwa-dept': '学内共同研究プロジェクト',
+    'daiwa-desc': '日本の大手証券会社で学内共同研究プロジェクトに参加し、金融データ分析と定量研究の経験を積み、厳密な学術研究能力と異文化協働能力を養う。',
+    'daiwa-tag1': 'データ分析', 'daiwa-tag2': '定量研究', 'daiwa-tag3': '日本金融',
+    'ibaraki-date': '2017.04 — 2023.03', 'ibaraki-company': '茨城大学（日本）', 'ibaraki-badge': '学士＋修士',
+    'ibaraki-role': '知能システム · 機械知能システム', 'ibaraki-dept': '学士：知能システム（2017—2021）&nbsp;·&nbsp; 修士：機械知能システム（2021—2023）',
+    'ibaraki-desc': '🏆 <strong style="color:#fbbf24">授業料全額免除</strong>（学業優秀による奨励）<br><br>主要科目：データ分析、自然言語処理、人工知能、機械学習、強化学習、英語アカデミックライティング、データ構造、コンピュータ基礎、高等数学',
+    'ibaraki-tag1': 'NLP', 'ibaraki-tag2': '機械学習', 'ibaraki-tag3': '強化学習',
+    'ibaraki-tag4': '全額奨学金', 'ibaraki-tag5': '日本留学',
+    'skills-title': 'コアスキル',
+    'skill1-name': 'NLP · 多言語コンテンツ安全',
+    'skill1-desc': '日・英・露・スペイン語の暴言・ポルノ検出モデルの開発を主導。精度99.99%以上、F1スコア0.75以上、日・英は競合を上回り、荒野行動や第五人格など複数の海外タイトルをカバー。',
+    'skill2-name': 'LLM · LoRA · SFT ファインチューニング',
+    'skill2-desc': 'LLM + LoRA + SFTの先端技術で少量データから7分類を高精度判別。国内初の未成年グルーミング対策モデルを主導し、適合率96%以上、国内外の特許を出願。',
+    'skill3-name': 'ゲーム経済安全 · 不正対策',
+    'skill3-desc': 'スクリプト周回と馴れ合い取引の両面で不正対策を主導し、<strong>適合率・カバレッジともに99%以上</strong>。スクリプト周回はクラウドフォン/エミュレータの大量アカウントをカバーし売上異常15倍以上。馴れ合い取引はグラフ分析と行動モデリングを組み合わせマネーロンダリングを遮断。',
+    'skill4-name': 'マルチモーダルLLM対策',
+    'skill4-desc': 'ゲームセキュリティ分野におけるLLM/VLMの攻防応用を研究し、LLMベースの知能セキュリティ分析・意思決定システムを構築。ゲームセキュリティのAI-Native化を推進。',
+    'skill5-name': '顔認証セキュリティ',
+    'skill5-desc': '生体検知回避対策やディープフェイク検出など顔認証システムのセキュリティリスクを深く研究し、実名認証体系と未成年保護メカニズムの有効性を担保。',
+    'skill6-name': 'データ分析 · アノテーション基盤構築',
+    'skill6-desc': 'アノテーションチームの標準SOPをゼロから構築し、Label Studioでオンラインアノテーション基盤を導入。Python / PyTorch / sklearn / HuggingFaceに精通し、MySQL・Hadoopのビッグデータ基盤に精通。',
+    'projects-title': '主要プロジェクト',
+    'project1-title': '海外多言語コンテンツ安全モデル体系',
+    'project1-desc': '荒野行動・第五人格・Dead by Daylight・Blood Strikeなど海外タイトルの暴言・ポルノ検出モデルをゼロから設計・導入。日・英・露・スペイン語の4言語をカバーし、精度99.99%以上。',
+    'project1-hl': '🏆 日・英は競合を上回り、適合率80%以上、F1スコア0.75以上',
+    'project2-title': '未成年グルーミング対策モデル（国内初）',
+    'project2-desc': 'LLM + LoRA + SFTを組み合わせ少量データで7分類を高精度判別し、異常プレイヤー行動モデルを組み合わせて未成年へのグルーミングを96%以上の適合率で高精度検出。',
+    'project2-hl': '📜 国内外特許出願済み + 網易イノベーション賞申請',
+    'project3-title': '『Delta Force』スクリプト周回対策',
+    'project3-desc': '行動系列分析と機械学習モデルによりスクリプト周回検出システムを構築し、クラウドフォン・エミュレータの大量不正アカウントをリアルタイムで高精度検出・処罰。HarmonyOS・Androidの複数端末をカバー。',
+    'project3-hl': '🎯 適合率・カバレッジ99%以上、監視リスト数百万規模、売上異常15倍以上',
+    'project4-title': '『Delta Force』馴れ合い取引対策',
+    'project4-desc': '仮想資産を移転するための故意の勝敗操作（馴れ合い取引）に対し、取引異常検出モデルを構築。グラフ関係ネットワークと行動系列モデリングを組み合わせ、高頻度の不審取引を特定しマネーロンダリングを遮断。',
+    'project4-hl': '💰 適合率・カバレッジ99%以上、グラフ＋行動の二重モデルで対策',
+    'project5-title': '『第五人格』荒らし・放置行為検出',
+    'project5-desc': '第五人格の荒らし（故意の敗北）行為と放置行為を対象に専用検出モデルを開発。高精度な検出能力で違反行為を効果的に特定し、公平なゲーム環境を維持。',
+    'project5-hl': '⚡ 適合率80%以上、荒らし・放置の不正を効果的に抑制',
+    'project6-title': 'アノテーション基盤 &amp; 審査体系の構築',
+    'project6-desc': 'アノテーションチームの標準SOPをゼロから構築し、オープンソースのLabel Studioでオンラインアノテーション基盤を導入して統一管理。審査SOPを最適化し品質管理・再審査体制を確立して審査精度を向上。',
+    'project6-hl': '💡 チーム管理＋基盤構築、ゼロから一貫した体系',
+    'tech-title': '技術スタック',
+    'cloud-1': 'NLP', 'cloud-2': '機械学習', 'cloud-3': 'ゲームセキュリティ', 'cloud-4': 'コンテンツ安全',
+    'cloud-5': '多言語モデル', 'cloud-6': 'LLM', 'cloud-7': 'LoRA / SFT', 'cloud-8': 'PyTorch',
+    'cloud-9': '不正対策', 'cloud-10': 'HuggingFace', 'cloud-11': 'マルチモーダルLLM', 'cloud-12': '経済安全アルゴリズム',
+    'cloud-13': 'テキスト分類', 'cloud-14': '顔認証セキュリティ', 'cloud-15': 'スクリプト周回対策', 'cloud-16': '馴れ合い取引対策',
+    'cloud-17': 'グラフ分析', 'cloud-18': 'Label Studio', 'cloud-19': 'Python', 'cloud-20': '行動系列分析',
+    'cloud-21': 'スクレイピング', 'cloud-22': 'MySQL / Hadoop', 'cloud-23': 'Delta Force', 'cloud-24': 'sklearn',
+    'cloud-25': 'VLM', 'cloud-26': '未成年保護', 'cloud-27': '異常検知', 'cloud-28': '特許出願',
+    'cloud-29': '日 · 英 · 露',
+    'contact-title': 'お問い合わせ', 'contact-email-label': 'メール', 'contact-bili-label': 'ビリビリ', 'contact-xhs-label': '小紅書（RED）',
+    'footer-copy': '<span>NetEase Games</span> 2023—2024 &nbsp;→&nbsp; <span>Tencent</span> 2024—現在'
+  }
+};
+
+const TYPE_PHRASES = {
+  zh: [
+    '守护游戏经济安全，打击黑产于无形',
+    'NLP × 内容安全 · 99.99% 准确率的极致追求',
+    '多语言辱骂/色情模型 · 日英俄西班牙语全覆盖',
+    '多模态大模型 × 游戏安全对抗',
+    '未成年性诱拐行为模型 · 国内首创 · 精确率96%+',
+    '算法策略工程师 · 恶意对抗专家'
+  ],
+  en: [
+    'Safeguarding game economy security, fighting cheating invisibly',
+    'NLP × Content Safety · the relentless pursuit of 99.99% accuracy',
+    'Multilingual abuse/porn models · JA EN RU ES full coverage',
+    'Multimodal LLM × game-security defense',
+    'Child-grooming detection · first in China · 96%+ precision',
+    'Algorithm Strategy Engineer · Anti-Cheat Expert'
+  ],
+  ja: [
+    'ゲーム経済安全を守り、不正を陰で撃つ',
+    'NLP × コンテンツ安全 · 99.99%精度への飽くなき追求',
+    '多言語暴言・ポルノモデル · 日英露スペイン語を網羅',
+    'マルチモーダルLLM × ゲームセキュリティ対抗',
+    '未成年グルーミング対策 · 国内初 · 適合率96%以上',
+    'アルゴリズム戦略エンジニア · 不正対策の専門家'
+  ]
+};
+
+function getLang() {
+  const q = new URLSearchParams(location.search).get('lang');
+  if (q && I18N[q]) return q;
+  const saved = localStorage.getItem('lang');
+  if (saved && I18N[saved]) return saved;
+  return 'zh';
+}
+
+function applyLang(lang) {
+  const dict = I18N[lang];
+  if (!dict) return;
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  const titleEl = document.getElementById('pageTitle');
+  if (titleEl && dict.title) titleEl.textContent = dict.title;
+  // 打字机短语切换
+  if (typeof phrases !== 'undefined') {
+    phrases = TYPE_PHRASES[lang];
+    pi = 0; ci = 0; deleting = false; waiting = false;
+    if (tw) tw.textContent = '';
+  }
+  // 高亮当前语言按钮
+  document.querySelectorAll('#langSwitch button').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+  localStorage.setItem('lang', lang);
+}
+
+function setLang(lang) {
+  applyLang(lang);
+}
+
 // ===== 粒子背景 =====
 const canvas = document.getElementById('canvas-bg');
 const ctx = canvas.getContext('2d');
@@ -1933,14 +2286,7 @@ function drawParticles() {
 drawParticles();
 
 // ===== 打字机效果 =====
-const phrases = [
-  '守护游戏经济安全，打击黑产于无形',
-  'NLP × 内容安全 · 99.99% 准确率的极致追求',
-  '多语言辱骂/色情模型 · 日英俄西班牙语全覆盖',
-  '多模态大模型 × 游戏安全对抗',
-  '未成年性诱拐行为模型 · 国内首创 · 精确率96%+',
-  '算法策略工程师 · 恶意对抗专家'
-];
+let phrases = TYPE_PHRASES[getLang()];
 let pi = 0, ci = 0, deleting = false, waiting = false;
 const tw = document.getElementById('typewriter');
 
@@ -2171,10 +2517,12 @@ const statObserver = new IntersectionObserver((entries) => {
     if (entry.isIntersecting && !entry.target.dataset.counted) {
       entry.target.dataset.counted = '1';
       const nums = entry.target.querySelectorAll('.stat-num');
+      const lang = getLang();
+      const statSuffix = { zh: ['+', '语', '%'], en: ['+', '', '%'], ja: ['+', '言語', '%'] };
       const configs = [
-        { target: 5, suffix: '+' },
-        { target: 4, suffix: '语' },
-        { target: 99.99, suffix: '%' }
+        { target: 5, suffix: statSuffix[lang][0] },
+        { target: 4, suffix: statSuffix[lang][1] },
+        { target: 99.99, suffix: statSuffix[lang][2] }
       ];
       nums.forEach((el, i) => {
         const cfg = configs[i];
@@ -2221,6 +2569,13 @@ if (heroSection) {
     });
   });
 }
+
+// ===== 语言切换绑定 & 初始化 =====
+document.querySelectorAll('#langSwitch button').forEach(btn => {
+  btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
+});
+
+applyLang(getLang());
 
 </script>
 </body>
